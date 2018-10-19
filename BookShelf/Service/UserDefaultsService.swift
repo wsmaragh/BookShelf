@@ -8,21 +8,31 @@
 
 import Foundation
 
+
+enum PreferredOrder: String {
+    case rank
+    case weeksOnList
+}
+
 struct UserDefaultsService {
     
     private init() {}
-    static let manager = UserDefaultsService()
-    
-    let savedBookCategory = "savedBookCategory"
+    static let shared = UserDefaultsService()
     
     let defaults = UserDefaults.standard
     
-    func setCategory(row: Int){
-        defaults.set(row, forKey: savedBookCategory)
+    
+    let preferredOrder = "preferredOrder"
+    
+    func setPreferredOrder(order: PreferredOrder){
+        defaults.set(order.rawValue, forKey: preferredOrder)
     }
     
-    func getCategoryIndex() -> Int? {
-        return defaults.integer(forKey: savedBookCategory)
+    func getPreferredOrder() -> PreferredOrder {
+        guard let order = defaults.string(forKey: preferredOrder) else {
+            return PreferredOrder.rank
+        }
+        return order == "rank" ? PreferredOrder.rank : PreferredOrder.weeksOnList
     }
 
 }

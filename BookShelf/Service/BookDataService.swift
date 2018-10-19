@@ -67,7 +67,7 @@ struct BookDataService {
     }
     
     
-    func getBooks(fromCategory categoryName: String, completion: @escaping (Error?, [NYTBestSellerBook]?) -> Void) {
+    func getNYTBooks(fromCategory categoryName: String, completion: @escaping (Error?, [NYTBestSellerBook]?) -> Void) {
                 
         let endpointForBooksInCategory = "https://api.nytimes.com/svc/books/v3/lists.json?api-key=\(APIKeys.NYTBookApiKey)&list=\(categoryName)"
         
@@ -94,40 +94,36 @@ struct BookDataService {
         
         task.resume()
     }
-    
-    //    //Get GoogleBook
-    //    func getGoogleBook(fromISBN isbn10: String, isbn13: String, completion: @escaping (Error?, GoogleBook?) -> Void) {
-    //
-    //        //        let endpoint = "https://www.googleapis.com/books/v1/volumes?q=isbn:\(isbn10)"
-    //
-    //        let endpoint = "https://www.googleapis.com/books/v1/volumes?q=isbn:\(isbn10)&key=\(APIKeys.GoogleBookApiKey)"
-    //
-    //        guard let googleBookDataUrl = URL(string: endpoint) else {return}
-    //
-    //        let task =  URLSession.shared.dataTask(with: googleBookDataUrl, completionHandler: { (data, response, error) in
-    //
-    //            if let error = error {
-    //                completion(error, nil)
-    //            }
-    //
-    //            else if let data = data {
-    //                do {
-    //                    let googleBookJson = try JSONDecoder().decode(GoogleBookJSON.self, from: data)
-    //                    let googleBookData = googleBookJson.items[0].volumeInfo
-    //                    completion(nil, googleBookData)
-    //                }
-    //                catch {
-    //
-    //                    print("Google Book - Doesnt Exist - using default info instead.  Code: \(error.localizedDescription)")
-    //
-    //                    let book = GoogleBook()
-    //                    completion(nil, googleBookData)
-    //                }
-    //            }
-    //
-    //        })
-    //
-    //        task.resume()
-    //    }
+
+
+//    func getGoogleBook(fromISBN isbn10: String, isbn13: String, completion: @escaping (Error?, GoogleBook?) -> Void) {
+//
+//        let endpoint = "https://www.googleapis.com/books/v1/volumes?q=isbn:\(isbn10)&key=\(APIKeys.GoogleBookApiKey)"
+//
+//        guard let googleBookDataUrl = URL(string: endpoint) else {return}
+//
+//        let task =  URLSession.shared.dataTask(with: googleBookDataUrl, completionHandler: { (data, response, error) in
+//
+//            if let error = error {
+//                completion(error, nil)
+//            }
+//
+//            else if let data = data {
+//                do {
+//                    let googleBookJson = try JSONDecoder().decode(GoogleBookJSON.self, from: data)
+//                    let googleBookData = googleBookJson.items[0].volumeInfo
+//                    completion(nil, googleBookData)
+//                }
+//                catch {
+//                    print("Google Book - Doesnt Exist - using default info instead.  Code: \(error.localizedDescription)")
+//
+//                    let book = GoogleBook()
+//                    completion(nil, googleBookData)
+//                }
+//            }
+//
+//        })
+//        task.resume()
+//    }
     
 }

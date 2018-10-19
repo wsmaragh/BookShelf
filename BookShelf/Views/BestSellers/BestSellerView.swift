@@ -39,11 +39,17 @@ class BestSellerView: UIView {
     private func commonInit() {
         backgroundColor = .white
         setupViews()
+        autoConfigPrefferedOrder()
     }
     
     private func setupViews() {
         addOrderSegmentedControl()
         addTableView()
+    }
+    
+    private func autoConfigPrefferedOrder() {
+        let order = UserDefaultsService.shared.getPreferredOrder()
+        orderSegmentedControl.selectedSegmentIndex = (order == PreferredOrder.weeksOnList) ? 1 : 0
     }
     
     private func addOrderSegmentedControl() {

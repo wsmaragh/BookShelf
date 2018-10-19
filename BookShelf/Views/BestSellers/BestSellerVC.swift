@@ -18,11 +18,7 @@ class BestSellerVC: UIViewController {
 
     var category: NYTBookCategory!
     
-    var books: [NYTBestSellerBook] = [] {
-        didSet {
-            reloadTableView()
-        }
-    }
+    var books: [NYTBestSellerBook] = []
     
     init(category: NYTBookCategory) {
         super.init(nibName: nil, bundle: nil)
@@ -48,7 +44,17 @@ class BestSellerVC: UIViewController {
     
     private func setupNavBar(){
         self.navigationItem.title = category.displayName
+        let rightBarButton = UIBarButtonItem(image: UIImage(named: "settings"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(settingsButtonPressed))
+        self.navigationItem.rightBarButtonItem = rightBarButton
     }
+
+    @objc func settingsButtonPressed() {
+        let settingsVC = SettingsVC()
+        settingsVC.modalPresentationStyle = .overCurrentContext
+        settingsVC.modalTransitionStyle = .crossDissolve
+        self.present(settingsVC, animated: true, completion: nil)
+    }
+
     
     private func setupSegmentedControl() {
         bestSellerView.orderSegmentedControl.addTarget(self, action: #selector(segmentControlChanged), for: .valueChanged)
@@ -75,14 +81,14 @@ class BestSellerVC: UIViewController {
     }
     
     private func fetchData() {
-        dataService.getBooks(fromCategory: category.searchName) { (error, bestSellerBooks) in
+        dataService.getNYTBooks(fromCategory: category.searchName) { (error, bestSellerBooks) in
             if let bestSellerBooks = bestSellerBooks {
                 self.books = bestSellerBooks
+                self.reloadTableView()
             }
         }
     }
 
-    
     private func reloadTableView() {
         DispatchQueue.main.async {
             self.bestSellerView.tableView.reloadData()
@@ -91,7 +97,7 @@ class BestSellerVC: UIViewController {
 
 }
 
-
+// MARK: Tableview Datasource
 extension BestSellerVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return books.count
@@ -114,7 +120,7 @@ extension BestSellerVC: UITableViewDataSource {
     
 }
 
-// MARK: Tableview
+// MARK: Tableview Delegate
 extension BestSellerVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
