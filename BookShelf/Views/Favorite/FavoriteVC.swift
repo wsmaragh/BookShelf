@@ -11,10 +11,15 @@ import UIKit
 class FavoriteVC: UIViewController {
     
     let favoriteView = FavoriteView()
+    let favoriteEmptyView = FavoriteEmptyView()
     
     let dataService = BookDataService()
     
-    var books: [NYTBestSellerBook] = []
+    var books: [NYTBestSellerBook] = [] {
+        didSet {
+            reloadTableView()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +47,7 @@ class FavoriteVC: UIViewController {
         let alertController = UIAlertController(title: "Delete All", message: "Are you sure you want to delete all favorities?", preferredStyle: UIAlertController.Style.alert)
         let okAction = UIAlertAction(title: "Yes", style: UIAlertAction.Style.default) { (_) in
             FileManagerService.shared.deleteAllFavoriteBooks()
-            self.reloadTableView()
+            self.books.removeAll()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
         alertController.addAction(okAction)
@@ -72,8 +77,17 @@ class FavoriteVC: UIViewController {
 
 // MARK: Tableview Datasource
 extension FavoriteVC: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return books.count
+        if books.count == 0 {
+            tableView.backgroundView = favoriteEmptyView
+            tableView.separatorStyle = .none
+            return 0
+        } else {
+            tableView.backgroundView = nil
+            tableView.separatorStyle = .singleLine
+            return books.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -85,10 +99,6 @@ extension FavoriteVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Best Sellers: "
     }
     
 }
