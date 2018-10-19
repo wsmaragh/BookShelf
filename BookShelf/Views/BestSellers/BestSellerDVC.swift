@@ -67,12 +67,22 @@ class BestSellerDVC: UIViewController {
     @objc func saveButtonPressed() {
         if bestSellerDetailView.saveButton.image(for: .normal) == UIImage(named: "like_empty") {
             //save to favorites
+//            FileManagerService.manager.addBookToFavoriteBooks(book: <#T##MasterBook#>)
             bestSellerDetailView.saveButton.setImage(UIImage(named: "like_filled"), for: .normal)
+            showBookAddedAlert()
+
         } else {
             //remove from favorites
             bestSellerDetailView.saveButton.setImage(UIImage(named: "like_empty"), for: .normal)
         }
        
+    }
+    
+    private func showBookAddedAlert(){
+        let alertController = UIAlertController(title: "Book Added", message: "Added to your favorites", preferredStyle: .alert)
+        let okAlert = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertController.addAction(okAlert)
+        present(alertController, animated: true, completion: nil)
     }
     
 }

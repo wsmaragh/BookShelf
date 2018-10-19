@@ -63,6 +63,9 @@ struct NYTBestSellerBook: Codable {
         return reviews[0].bookReviewLink
     }
     
+    var longDescription: String?
+    var imageStr: String?
+    
     enum CodingKeys: String, CodingKey {
         case categoryName = "display_name"
         case rank

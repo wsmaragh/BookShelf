@@ -14,8 +14,8 @@ class FileManagerService{
     private init(){}
     static let manager = FileManagerService()
     
-    static let kPathName = "FavoriteBooks.plist"
-    
+    static let kFavorites = "FavoriteBooks.plist"
+        
     private var favoriteBooks = [MasterBook]() {
         didSet {
             saveFavoriteBooks()
@@ -35,7 +35,7 @@ class FileManagerService{
     func saveFavoriteBooks(){
         do {
             let data = try PropertyListEncoder().encode(favoriteBooks)
-            let path = dataFilePath(pathName: FileManagerService.kPathName)
+            let path = dataFilePath(pathName: FileManagerService.kFavorites)
             try data.write(to: path, options: .atomic)
         }
         catch {print("encoder error: \(error.localizedDescription)")}
@@ -43,7 +43,7 @@ class FileManagerService{
     
     func loadFavoriteBooks(){
         do {
-            let path = dataFilePath(pathName: FileManagerService.kPathName)
+            let path = dataFilePath(pathName: FileManagerService.kFavorites)
             let data = try Data.init(contentsOf: path)
             let savedBooks = try PropertyListDecoder().decode([MasterBook].self, from: data)
             favoriteBooks = savedBooks
