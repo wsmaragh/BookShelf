@@ -30,10 +30,10 @@
 * Buy book on Amazon
 
 ## Test:
-* clone or download the project to test.
+* clone or download the project to test. No dependencies.
 
 ## Built using:
-* Swift 4.2, and programmatic Layout (no storyboards)
+* Swift 4.2, and programmatic Layout (no storyboards) 
 
 ## Developed by:
 <img src = "https://i.imgur.com/N3G0BEJ.gif" width=150>
