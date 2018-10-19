@@ -17,8 +17,9 @@
     <img src= "https://github.com/wsmaragh/BookShelf/blob/master/BookShelf/Supporting/Gifs/search.gif" width="300">
     <img src= "https://github.com/wsmaragh/BookShelf/blob/master/BookShelf/Supporting/Gifs/toggle.gif" width="300">
     <img src= "https://github.com/wsmaragh/BookShelf/blob/master/BookShelf/Supporting/Gifs/saveFavorite.gif" width="300">
+    <img src= "https://github.com/wsmaragh/BookShelf/blob/master/BookShelf/Supporting/Gifs/settings.gif" width="300">
     <img src= "https://github.com/wsmaragh/BookShelf/blob/master/BookShelf/Supporting/Gifs/review.gif" width="300"> 
-    <img src= "https://github.com/wsmaragh/BookShelf/blob/master/BookShelf/Supporting/Gifs/amazon.gif" width="300">
+    <img src= "https://github.com/wsmaragh/BookShelf/blob/master/BookShelf/Supporting/Gifs/amazon.gif" width="300">           
 </p>
 
 
