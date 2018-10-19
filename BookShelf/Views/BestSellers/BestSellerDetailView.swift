@@ -208,7 +208,6 @@ class BestSellerDetailView: UIView {
         NSLayoutConstraint.activate([
             bookReviewButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 12),
             bookReviewButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16)
-//            bookReviewButton.widthAnchor.constraint(equalToConstant: 180)
             ])
     }
     
@@ -219,7 +218,6 @@ class BestSellerDetailView: UIView {
         NSLayoutConstraint.activate([
             amazonButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 12),
             amazonButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16)
-//            amazonButton.widthAnchor.constraint(equalToConstant: 150)
             ])
     }
     
@@ -232,6 +230,12 @@ class BestSellerDetailView: UIView {
         descriptionLabel.text = book.shortDescription
         amazonButton.isHidden = book.amazonURLString.isEmpty ? true : false
         bookReviewButton.isHidden = book.review.isEmpty ? true : false
+        
+        if FileManagerService.shared.isBookSaved(book: book) {
+            saveButton.setImage(UIImage(named: "like_filled"), for: .normal)
+        } else {
+            saveButton.setImage(UIImage(named: "like_empty"), for: .normal)
+        }
     }
 
 }

@@ -12,27 +12,27 @@ import UIKit
 class FileManagerService{
     
     private init(){}
-    static let manager = FileManagerService()
+    static let shared = FileManagerService()
     
     static let kFavorites = "FavoriteBooks.plist"
         
-    private var favoriteBooks = [MasterBook]() {
+    private var favoriteBooks = [NYTBestSellerBook]() {
         didSet {
             saveFavoriteBooks()
         }
     }
     
-    func dataFilePath(pathName: String)->URL {
-        let path = FileManagerService.manager.documentDirectory()
+    private func dataFilePath(pathName: String)->URL {
+        let path = FileManagerService.shared.documentDirectory()
         return path.appendingPathComponent(pathName)
     }
 
-    func documentDirectory()->URL {
+    private func documentDirectory()->URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0] //the 0 is the document folder
+        return paths[0]
     }
     
-    func saveFavoriteBooks(){
+    private func saveFavoriteBooks(){
         do {
             let data = try PropertyListEncoder().encode(favoriteBooks)
             let path = dataFilePath(pathName: FileManagerService.kFavorites)
@@ -41,78 +41,82 @@ class FileManagerService{
         catch {print("encoder error: \(error.localizedDescription)")}
     }
     
-    func loadFavoriteBooks(){
+    private func loadFavoriteBooks(){
         do {
             let path = dataFilePath(pathName: FileManagerService.kFavorites)
             let data = try Data.init(contentsOf: path)
-            let savedBooks = try PropertyListDecoder().decode([MasterBook].self, from: data)
+            let savedBooks = try PropertyListDecoder().decode([NYTBestSellerBook].self, from: data)
             favoriteBooks = savedBooks
         }
         catch {print("decoder error: \(error.localizedDescription)")}
     }
     
-    func addBookToFavoriteBooks(book: MasterBook) {
-        if favoriteBooks.contains(where: {$0.isbn10 == book.isbn10}) {return} //do not add duplicate
-        else {favoriteBooks.append(book)}
+    
+    // MARK: create Book
+    
+    func addFavoriteBook(book: NYTBestSellerBook) {
+        if favoriteBooks.contains(where: {$0.isbn10 == book.isbn10}) {
+            return
+        } else {
+            favoriteBooks.append(book)
+        }
     }
     
-    func addBookToFavoriteBooks(book: MasterBook, andImage image: UIImage) -> Bool  {
+    func addFavoriteBook(book: NYTBestSellerBook, andImage image: UIImage) -> Bool  {
         if favoriteBooks.contains(where: {$0.isbn10 == book.isbn10}) {
             return false
-        }
-            
-        else {
+        } else {
             favoriteBooks.append(book)
-            
-            guard let imageData = image.pngData() else { return false }
-            let  imagePathNameURL = FileManagerService.manager.dataFilePath(pathName: "\(book.imageStr!)")
-            do {
-                try imageData.write(to:  imagePathNameURL); return true
-            }
-            catch {
-                print("image saving error: \(error.localizedDescription)");
-                return false
-            }
-        }
-    }
-    
-    func deleteBookFromFavoriteBooks(fromIndex index: Int){
-        favoriteBooks.remove(at: index)
-    }
-    
-    func deleteFavoriteBook(fromIndex index: Int, andBookImage book: MasterBook) -> Bool {
-        favoriteBooks.remove(at: index)
-        let imageURL = FileManagerService.manager.dataFilePath(pathName: "\(book.imageStr!)")
-        do {
-            try FileManager.default.removeItem(at: imageURL)
+            saveBookImage(book: book, image: image)
             return true
         }
-        catch {
-            print("error removing: \(error.localizedDescription)")
-            return false
-        }
     }
     
-    func deleteAllFavoriteBooks() {
-        for book in favoriteBooks {
-            let imageURL = FileManagerService.manager.dataFilePath(pathName: "\(book.imageStr!)")
-            do {
-                try FileManager.default.removeItem(at: imageURL)
-            }
-            catch {print("error removing: \(error.localizedDescription)")}
-        }
-        favoriteBooks.removeAll()
-    }
+
+    // MARK: Read Book
     
-    
-    func getAllFavoriteBooks() -> [MasterBook]{
+    func getFavoriteBooks() -> [NYTBestSellerBook]{
         loadFavoriteBooks()
         return favoriteBooks
     }
     
-    func saveImage(with book: MasterBook, image: UIImage) {
+    func isBookSaved(book: NYTBestSellerBook) -> Bool {
+        loadFavoriteBooks()
+        if favoriteBooks.contains(where: {$0.isbn10 == book.isbn10}) {
+            return true
+        }
+        return false
+    }
+    
+    // MARK: Update
+    
+    func updateFavoriteBook(book: NYTBestSellerBook){
+        //get book
+        //change attributes
+        //save
+    }
+    
+    
+    // MARK: Delete Book(s)
+    
+    func deleteFavoriteBook(book: NYTBestSellerBook) {
+        if let index = favoriteBooks.index(where: { $0.isbn10 == book.isbn10 }) {
+            favoriteBooks.remove(at: index )
+        }
+        removeBookImage(book: book)
+    }
+    
+    func deleteAllFavoriteBooks() {
+        favoriteBooks.forEach { removeBookImage(book: $0) }
+        favoriteBooks.removeAll()
+    }
+    
+    
+    // MARK: Save-Delete Book Image
+    
+    func saveBookImage(book: NYTBestSellerBook, image: UIImage) {
         let imageData = image.pngData()
-        let imagePathNameURL = book.imageStr?.components(separatedBy: "/").last!
+        let imagePathNameURL = book.imageStr
         let url = dataFilePath(pathName: imagePathNameURL!)
         do {
             try imageData?.write(to: url)
@@ -120,14 +124,30 @@ class FileManagerService{
         catch {print(error.localizedDescription)}
     }
     
-    func getImage(with book: MasterBook) -> UIImage? {
+    func getBookImage(book: NYTBestSellerBook) -> UIImage? {
         do {
-            let imagePathName =  book.imageStr?.components(separatedBy: "/").last!
+            let imagePathName =  book.imageStr
             let url = dataFilePath(pathName: imagePathName!)
             let data = try Data(contentsOf: url)
             return UIImage(data: data)
         }
         catch { print(error.localizedDescription); return nil}
+    }
+    
+    func updateBookImage(book: NYTBestSellerBook) -> Bool {
+        
+        return false
+    }
+    
+    private func removeBookImage(book: NYTBestSellerBook) {
+        guard let imageStr = book.imageStr else { return }
+        let imageURL = FileManagerService.shared.dataFilePath(pathName: "\(imageStr)")
+        do {
+            try FileManager.default.removeItem(at: imageURL)
+        }
+        catch {
+            print(error)
+        }
     }
     
 }

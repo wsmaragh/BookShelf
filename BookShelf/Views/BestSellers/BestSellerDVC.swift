@@ -44,6 +44,13 @@ class BestSellerDVC: UIViewController {
     
     private func setupNavBar(){
         self.navigationItem.title = book.categoryName
+        let rightBarButton = UIBarButtonItem(image: UIImage(named: "favorite"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(favoritePressed))
+        self.navigationItem.rightBarButtonItem = rightBarButton
+    }
+    
+    @objc func favoritePressed() {
+        let favoriteVC = FavoriteVC()
+        self.navigationController?.pushViewController(favoriteVC, animated: true)
     }
     
     @objc func amazonButtonPressed() {
@@ -66,16 +73,13 @@ class BestSellerDVC: UIViewController {
     
     @objc func saveButtonPressed() {
         if bestSellerDetailView.saveButton.image(for: .normal) == UIImage(named: "like_empty") {
-            //save to favorites
-//            FileManagerService.manager.addBookToFavoriteBooks(book: <#T##MasterBook#>)
+            FileManagerService.shared.addFavoriteBook(book: book)
             bestSellerDetailView.saveButton.setImage(UIImage(named: "like_filled"), for: .normal)
             showBookAddedAlert()
-
         } else {
-            //remove from favorites
+            FileManagerService.shared.deleteFavoriteBook(book: book)
             bestSellerDetailView.saveButton.setImage(UIImage(named: "like_empty"), for: .normal)
         }
-       
     }
     
     private func showBookAddedAlert(){
