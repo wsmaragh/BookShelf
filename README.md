@@ -1,5 +1,8 @@
 # BookShelf
 
+<a>
+    <p align="center">  BookShelf </p> 
+</a>
 <p align="center">
     <img        src="https://github.com/wsmaragh/BookShelf/blob/master/BookShelf/Supporting/Assets.xcassets/AppIcon.appiconset/Icon-180.png" width="150" style="max-width:100%;">
 </p>
