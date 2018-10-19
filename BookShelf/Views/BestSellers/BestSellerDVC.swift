@@ -44,13 +44,6 @@ class BestSellerDVC: UIViewController {
     
     private func setupNavBar(){
         self.navigationItem.title = book.categoryName
-        let rightBarButton = UIBarButtonItem(image: UIImage(named: "favorite"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(favoritePressed))
-        self.navigationItem.rightBarButtonItem = rightBarButton
-    }
-    
-    @objc func favoritePressed() {
-        let favoriteVC = FavoriteVC()
-        self.navigationController?.pushViewController(favoriteVC, animated: true)
     }
     
     @objc func amazonButtonPressed() {
