@@ -1,7 +1,7 @@
 # BookShelf
 
 <p align="center">
-    <img        src="https://github.com/wsmaragh/BookShelf/blob/master/BookShelf/Supporting/Assets.xcassets/AppIcon.appiconset/Icon-180.png" width="300" style="max-width:100%;">
+    <img        src="https://github.com/wsmaragh/BookShelf/blob/master/BookShelf/Supporting/Assets.xcassets/AppIcon.appiconset/Icon-180.png" width="150" style="max-width:100%;">
 </p>
 
 <a>
@@ -11,11 +11,11 @@
 ## App Flow:
 
 <p align="center">
-    <img src="https://github.com/wsmaragh/BookShelf/blob/master/BookShelf/Supporting/Gifs/searchBrowse.gif" width="300">
-    <img src="https://github.com/wsmaragh/BookShelf/blob/master/PaperBoy/Supporting/Gifs/toggle.gif" width="300">
-    <img src="https://github.com/wsmaragh/BookShelf/blob/master/PaperBoy/Supporting/Gifs/saveFavorite.gif" width="300">
-    <img src="https://github.com/wsmaragh/BookShelf/blob/master/PaperBoy/Supporting/Gifs/review.gif" width="300"> 
-    <img src="https://github.com/wsmaragh/BookShelf/blob/master/PaperBoy/Supporting/Gifs/amazon.gif" width="300">
+    <img src= "https://github.com/wsmaragh/BookShelf/blob/master/BookShelf/Supporting/Gifs/search.gif" width="300">
+    <img src= "https://github.com/wsmaragh/BookShelf/blob/master/BookShelf/Supporting/Gifs/toggle.gif" width="300">
+    <img src= "https://github.com/wsmaragh/BookShelf/blob/master/BookShelf/Supporting/Gifs/saveFavorite.gif" width="300">
+    <img src= "https://github.com/wsmaragh/BookShelf/blob/master/BookShelf/Supporting/Gifs/review.gif" width="300"> 
+    <img src= "https://github.com/wsmaragh/BookShelf/blob/master/BookShelf/Supporting/Gifs/amazon.gif" width="300">
 </p>
 
 
