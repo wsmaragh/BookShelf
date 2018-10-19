@@ -29,6 +29,7 @@ class BestSellerDVC: UIViewController {
         setupNavBar()
         bestSellerDetailView.bookReviewButton.addTarget(self, action: #selector(bookReviewButtonPressed), for: .touchUpInside)
         bestSellerDetailView.amazonButton.addTarget(self, action: #selector(amazonButtonPressed), for: .touchUpInside)
+        bestSellerDetailView.saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,6 +49,8 @@ class BestSellerDVC: UIViewController {
     @objc func amazonButtonPressed() {
         if !book.amazonURLString.isEmpty {
             let webVC = WebVC(link: book.amazonURLString)
+            webVC.title = "Buy on Amazon"
+            webVC.navigationItem.title = "Buy on Amazon"
             self.navigationController?.pushViewController(webVC, animated: true)
         }
     }
@@ -55,8 +58,21 @@ class BestSellerDVC: UIViewController {
     @objc func bookReviewButtonPressed() {
         if !book.review.isEmpty {
             let webVC = WebVC(link: book.review)
+            webVC.title = "NYTimes Review"
+            webVC.navigationItem.title = "NYTimes Review"
             self.navigationController?.pushViewController(webVC, animated: true)
         }
+    }
+    
+    @objc func saveButtonPressed() {
+        if bestSellerDetailView.saveButton.image(for: .normal) == UIImage(named: "like_empty") {
+            //save to favorites
+            bestSellerDetailView.saveButton.setImage(UIImage(named: "like_filled"), for: .normal)
+        } else {
+            //remove from favorites
+            bestSellerDetailView.saveButton.setImage(UIImage(named: "like_empty"), for: .normal)
+        }
+       
     }
     
 }

@@ -33,7 +33,6 @@ class WebVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
     
     private func setupNavBar(){
-        navigationItem.title = "In App Browser"
         self.navigationController?.navigationBar.topItem?.title = ""
         self.view = webView
     }

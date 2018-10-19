@@ -71,10 +71,17 @@ class BestSellerDetailView: UIView {
         return label
     }()
     
+    lazy var saveButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "like_empty"), for: .normal)
+        button.tintColor = UIColor.init(red: 51/255, green: 102/255, blue: 204/255, alpha: 1.0)
+        return button
+    }()
+    
     lazy var bookReviewButton: UIButton = {
         let button = UIButton()
-        button.setTitle("NYT Book Review", for: .normal)
-        button.backgroundColor = .lightGray
+        button.setTitle("  NYT Book Review  ", for: .normal)
+        button.backgroundColor = UIColor.init(red: 51/255, green: 102/255, blue: 204/255, alpha: 1.0)
         button.tintColor = UIColor.darkGray
         button.isHidden = true
         return button
@@ -82,8 +89,8 @@ class BestSellerDetailView: UIView {
     
     lazy var amazonButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Buy on Amazon", for: .normal)
-        button.backgroundColor = .lightGray
+        button.setTitle("  Buy on Amazon  ", for: .normal)
+        button.backgroundColor = UIColor.init(red: 76/255, green: 187/255, blue: 23/255, alpha: 1.0)
         button.tintColor = UIColor.darkGray
         button.isHidden = true
         return button
@@ -112,6 +119,7 @@ class BestSellerDetailView: UIView {
         addRankLabel()
         addWeeksOnListLabel()
         addTitleLabel()
+        addSaveButton()
         addBookImageView()
         addAuthorLabel()
         addDescriptionLabel()
@@ -146,6 +154,16 @@ class BestSellerDetailView: UIView {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: weeksOnListLabel.bottomAnchor, constant: 12),
             titleLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
+            ])
+    }
+    
+    private func addSaveButton() {
+        addSubview(saveButton)
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            saveButton.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -8),
+            saveButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor)
             ])
     }
     
@@ -189,8 +207,8 @@ class BestSellerDetailView: UIView {
         
         NSLayoutConstraint.activate([
             bookReviewButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 12),
-            bookReviewButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            bookReviewButton.widthAnchor.constraint(equalToConstant: 180)
+            bookReviewButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16)
+//            bookReviewButton.widthAnchor.constraint(equalToConstant: 180)
             ])
     }
     
@@ -200,8 +218,8 @@ class BestSellerDetailView: UIView {
         
         NSLayoutConstraint.activate([
             amazonButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 12),
-            amazonButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            amazonButton.widthAnchor.constraint(equalToConstant: 150)
+            amazonButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16)
+//            amazonButton.widthAnchor.constraint(equalToConstant: 150)
             ])
     }
     

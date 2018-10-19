@@ -26,8 +26,8 @@ class SettingsView: UIView {
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.textAlignment = .center
         label.layer.opacity = 1.0
-        label.textColor = UIColor.darkGray
-        label.backgroundColor = UIColor.red
+        label.textColor = UIColor.white
+        label.backgroundColor = UIColor.init(red: 51/255, green: 102/255, blue: 204/255, alpha: 1.0)
         label.numberOfLines = 1
         return label
     }()
@@ -55,9 +55,7 @@ class SettingsView: UIView {
     lazy var doneButton: UIButton = {
         let button = UIButton()
         button.setTitle(" Done ", for: .normal)
-//        button.tintColor = UIColor.red
-        button.backgroundColor = .red
-        button.isHidden = false
+        button.backgroundColor = UIColor.init(red: 51/255, green: 102/255, blue: 204/255, alpha: 1.0)
         return button
     }()
     
