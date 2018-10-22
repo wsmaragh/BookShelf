@@ -44,6 +44,7 @@ class FavoriteVC: UIViewController {
     }
     
     @objc func deleteAllFavoritesPressed() {
+        guard !books.isEmpty else {return}
         let alertController = UIAlertController(title: "Delete All", message: "Are you sure you want to delete all favorities?", preferredStyle: UIAlertController.Style.alert)
         let okAction = UIAlertAction(title: "Yes", style: UIAlertAction.Style.default) { (_) in
             FileManagerService.shared.deleteAllFavoriteBooks()

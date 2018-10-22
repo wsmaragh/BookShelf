@@ -7,12 +7,12 @@
 //
 
 import UIKit
+import SkeletonView
 
 class CategoryCell: UICollectionViewCell {
 
     lazy var label: UILabel = {
         let label = UILabel()
-        label.text = "Category"
         label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         label.textAlignment = .center
         label.layer.opacity = 0.9
@@ -27,6 +27,8 @@ class CategoryCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        isSkeletonable = true
+        label.isSkeletonable = true
         commonInit()
     }
     
@@ -45,7 +47,6 @@ class CategoryCell: UICollectionViewCell {
     private func setupViews() {
         addLabel()
     }
-    
     
     private func addLabel() {
         addSubview(label)

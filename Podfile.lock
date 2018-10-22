@@ -1,0 +1,32 @@
+PODS:
+  - PromiseKit (6.5.2):
+    - PromiseKit/CorePromise (= 6.5.2)
+    - PromiseKit/Foundation (= 6.5.2)
+    - PromiseKit/UIKit (= 6.5.2)
+  - PromiseKit/CorePromise (6.5.2)
+  - PromiseKit/Foundation (6.5.2):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (6.5.2):
+    - PromiseKit/CorePromise
+  - ReachabilitySwift (4.3.0)
+  - SkeletonView (1.4.1)
+
+DEPENDENCIES:
+  - PromiseKit
+  - ReachabilitySwift
+  - SkeletonView
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - PromiseKit
+    - ReachabilitySwift
+    - SkeletonView
+
+SPEC CHECKSUMS:
+  PromiseKit: 27c1601bfb73405871b805bcb8cf7e55c4dad3db
+  ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
+  SkeletonView: 60d6ce7edb0cb4c7758db33c74add50392b3c475
+
+PODFILE CHECKSUM: dd8fe0f40196aca2377a1e81dda611284dcf765f
+
+COCOAPODS: 1.5.3

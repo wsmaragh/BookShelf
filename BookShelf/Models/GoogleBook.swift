@@ -9,7 +9,7 @@
 import Foundation
 
 struct GoogleBookJSON: Codable {
-    let items: [Items]  //.first
+    let items: [Items]
 }
 
 struct Items: Codable {
@@ -20,30 +20,21 @@ struct GoogleBook: Codable {
     let title: String?
     let longDescription: String?
     private let imageLinks: ImageLinks?
+    let publishedDate: String?
     
     var imageStr: String? {
-        get{
-            return imageLinks?.thumbnail
-        }
-        set(newValue) {
-            
-        }
+        return imageLinks?.thumbnail
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case title
         case longDescription = "description"
         case imageLinks
+        case publishedDate
     }
-    
-    init(title: String, longDescription: String, imageLinks: ImageLinks? = nil) {
-        self.title = title
-        self.longDescription = longDescription
-        self.imageLinks = imageLinks
-    }
-    
 }
 
 struct ImageLinks: Codable {
     let thumbnail: String?
 }
+

@@ -11,11 +11,17 @@ import UIKit
 
 
 class ImageService {
+    
     private init() {}
     static let shared = ImageService()
     
     func getImage(from urlStr: String,
                   completionHandler: @escaping (UIImage?) -> Void) {
+        
+        if let savedImage = FileManagerService.shared.getUIImage(with: urlStr) {
+            completionHandler(savedImage)
+            return
+        }
         
         if let cacheImage = ImageCacheService.shared.getImageFromCache(string: urlStr) {
             completionHandler(cacheImage)
@@ -34,7 +40,8 @@ class ImageService {
 
 
 class ImageCacheService {
-    private init(){}
+    
+    private init() {}
     static let shared = ImageCacheService()
     
     private var imageCache = NSCache<NSString, UIImage>()

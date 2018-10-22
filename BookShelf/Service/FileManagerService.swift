@@ -9,28 +9,39 @@
 import Foundation
 import UIKit
 
-class FileManagerService{
+class FileManagerService {
     
     private init(){}
     static let shared = FileManagerService()
     
     static let kFavorites = "FavoriteBooks.plist"
-        
+    static let kCategories = "Categories.plist"
+    static let kBooks = "Book.plist"
+
+    private var categories = [NYTBookCategory]()
+    
     private var favoriteBooks = [NYTBestSellerBook]() {
         didSet {
             saveFavoriteBooks()
         }
     }
     
+    private var books = [String: [NYTBestSellerBook]]()
+    
+    
     private func dataFilePath(pathName: String)->URL {
         let path = FileManagerService.shared.documentDirectory()
         return path.appendingPathComponent(pathName)
     }
-
+    
     private func documentDirectory()->URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
+    
+
+
+    
     
     private func saveFavoriteBooks(){
         do {
@@ -116,8 +127,8 @@ class FileManagerService{
     
     func saveBookImage(book: NYTBestSellerBook, image: UIImage) {
         let imageData = image.pngData()
-        let imagePathNameURL = book.imageStr
-        let url = dataFilePath(pathName: imagePathNameURL!)
+        guard let imageStr = book.imageStr else {return}
+        let url = dataFilePath(pathName: imageStr)
         do {
             try imageData?.write(to: url)
         }
@@ -126,8 +137,8 @@ class FileManagerService{
     
     func getBookImage(book: NYTBestSellerBook) -> UIImage? {
         do {
-            let imagePathName =  book.imageStr
-            let url = dataFilePath(pathName: imagePathName!)
+            guard let imageStr = book.imageStr else {return nil}
+            let url = dataFilePath(pathName: imageStr)
             let data = try Data(contentsOf: url)
             return UIImage(data: data)
         }
@@ -140,13 +151,65 @@ class FileManagerService{
     }
     
     private func removeBookImage(book: NYTBestSellerBook) {
-        guard let imageStr = book.imageStr else { return }
-        let imageURL = FileManagerService.shared.dataFilePath(pathName: "\(imageStr)")
+        let imageURL = FileManagerService.shared.dataFilePath(pathName: "\(book.imageStr)")
         do {
             try FileManager.default.removeItem(at: imageURL)
         }
         catch {
             print(error)
+        }
+    }
+    
+    
+    
+    func saveUIImage(with urlStr: String, image: UIImage) {
+        let imageData = image.pngData()
+        let url = dataFilePath(pathName: urlStr)
+        do {
+            try imageData?.write(to: url)
+        }
+        catch {print(error)}
+    }
+    
+    func getUIImage(with urlStr: String) -> UIImage? {
+        do {
+            let url = dataFilePath(pathName: urlStr)
+            let data = try Data(contentsOf: url)
+            return UIImage(data: data)
+        }
+        catch {print(error); return nil}
+    }
+    
+    func RemoveImageFromDisk(with key: String)->Bool {
+        let imageURL = FileManagerService.shared.dataFilePath(pathName: key)
+        do {
+            try FileManager.default.removeItem(at: imageURL)
+            return true
+        }
+        catch {print("error removing: \(error)"); return false}
+    }
+    
+    
+    
+    func saveCategories(categories: [NYTBookCategory]) {
+        do {
+            let data = try PropertyListEncoder().encode(categories)
+            let path = dataFilePath(pathName: FileManagerService.kCategories)
+            try data.write(to: path, options: .atomic)
+        } catch {
+            print("encoder error: \(error.localizedDescription)")
+        }
+    }
+    
+     func getCategories() -> [NYTBookCategory]? {
+        do {
+            let path = dataFilePath(pathName: FileManagerService.kCategories)
+            let data = try Data.init(contentsOf: path)
+            let savedCategories = try PropertyListDecoder().decode([NYTBookCategory].self, from: data)
+            return (savedCategories)
+        }
+        catch {
+            return (nil)
         }
     }
     

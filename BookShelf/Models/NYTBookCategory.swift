@@ -26,12 +26,15 @@ struct NYTBookCategory: Codable {
     let lastPublishedDate: String //"2018-10-28"
     let earliestPublishedDate: String
     
+    var updatedDate: Date {
+        return Date()
+    }
+    
     enum CodingKeys: String, CodingKey {
         case searchName = "list_name_encoded"
         case displayName = "display_name"
         case updated
         case lastPublishedDate = "newest_published_date"
         case earliestPublishedDate = "oldest_published_date"
-        
     }
 }

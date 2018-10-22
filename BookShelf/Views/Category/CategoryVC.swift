@@ -7,19 +7,19 @@
 //
 
 import UIKit
+import SkeletonView
 
 class CategoryVC: UIViewController {
-
-    @IBOutlet weak var tableView: UITableView!
     
     let categoriesView = CategoriesView()
     let viewModel = CategoriesViewModel()
     let dataService = BookDataService()
+
     private var searchController: UISearchController = UISearchController(searchResultsController: nil)
     
     private var categories: [NYTBookCategory] = [] {
         didSet {
-            reloadCollectionView()
+            self.reloadCollectionView()
         }
     }
 
@@ -35,7 +35,43 @@ class CategoryVC: UIViewController {
         setupSearchController()
         setupCustomView()
         setupCollectionView()
-        fetchCategories()
+        makeSkeletonable()
+        networkCheck()
+    }
+    
+    private func networkCheck() {
+        if NetworkAvailable.shared.reachability.connection != .none {
+            fetchCategories()
+        } else {
+            showOfflineVC()
+        }
+        
+        NetworkAvailable.shared.reachability.whenUnreachable = { reachability in
+            self.showOfflineVC()
+        }
+    }
+    
+    private func showOfflineVC() {
+        let offlineVC = OfflineVC()
+        offlineVC.modalTransitionStyle = .crossDissolve
+        offlineVC.modalPresentationStyle = .overFullScreen
+        self.present(offlineVC, animated: true, completion: nil)
+    }
+    
+    private func showSkeleton() {
+        self.categoriesView.collectionView.prepareSkeleton(completion: { done in
+            if self.categories.isEmpty {
+                self.view.showAnimatedSkeleton()
+            } else {
+                self.view.hideSkeleton(reloadDataAfter: true)
+            }
+        })
+    }
+    
+    private func hideSkeleton() {
+        self.categoriesView.collectionView.prepareSkeleton(completion: { done in
+            self.view.hideSkeleton()
+        })
     }
     
     private func setupNavBar(){
@@ -74,12 +110,20 @@ class CategoryVC: UIViewController {
     
     private func setupCustomView() {
         self.view = categoriesView
+
+    }
+    
+    func makeSkeletonable() {
+        view.isSkeletonable = true
+        categoriesView.isSkeletonable = true
+        self.categoriesView.collectionView.isSkeletonable = true
+        showSkeleton()
     }
     
     private func setupCollectionView() {
         self.categoriesView.collectionView.delegate = self
         self.categoriesView.collectionView.dataSource = self
-        self.categoriesView.collectionView.register(CollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionViewHeader.cellID)
+        
     }
     
     private func reloadCollectionView() {
@@ -92,6 +136,7 @@ class CategoryVC: UIViewController {
         dataService.getBookCategories { (networkError, bookCategories) in
             if let bookCategories = bookCategories {
                 self.categories = bookCategories
+                self.showSkeleton()
             }
         }
     }
@@ -115,12 +160,11 @@ class CategoryVC: UIViewController {
         super.didReceiveMemoryWarning()
     }
 
-
 }
 
 
 // MARK:
-extension CategoryVC: UICollectionViewDataSource {
+extension CategoryVC: SkeletonCollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -132,20 +176,27 @@ extension CategoryVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.cellID, for: indexPath) as! CategoryCell
+        cell.isSkeletonable = true
         let category = searchController.isActive ? filteredCategories[indexPath.item] : categories[indexPath.item]
         cell.configureCell(category: category)
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionViewHeader.cellID, for: indexPath) as! CollectionViewHeader
-        return header
-
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return CategoryCell.cellID
     }
     
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdenfierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        skeletonView.register(CategoryCell.self, forCellReuseIdentifier: CategoryCell.cellID)
+        return CategoryCell.cellID
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 25
+    }
     
 }
+
 
 
 // MARK:
@@ -174,7 +225,6 @@ extension CategoryVC: UICollectionViewDelegateFlowLayout {
         return CGSize(width: itemWidth, height: itemHeight)
     }
 }
-
 
 // MARK: - UISearchControllerDelegate
 extension CategoryVC: UISearchResultsUpdating {

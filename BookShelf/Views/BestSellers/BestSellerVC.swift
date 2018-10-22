@@ -7,18 +7,22 @@
 //
 
 import UIKit
+import SkeletonView
+
 
 class BestSellerVC: UIViewController {
 
     let bestSellerView = BestSellerView()
-    
     let viewModel = CategoriesViewModel()
-    
     let dataService = BookDataService()
 
     var category: NYTBookCategory!
     
-    var books: [NYTBestSellerBook] = []
+    var books: [NYTBestSellerBook] = [] {
+        didSet {
+            self.reloadTableView()
+        }
+    }
     
     init(category: NYTBookCategory) {
         super.init(nibName: nil, bundle: nil)
@@ -37,7 +41,7 @@ class BestSellerVC: UIViewController {
         setupSegmentedControl()
         setupTableView()
     }
-    
+
     private func setupCustomView() {
         self.view = bestSellerView
     }
@@ -55,7 +59,6 @@ class BestSellerVC: UIViewController {
         self.present(settingsVC, animated: true, completion: nil)
     }
 
-    
     private func setupSegmentedControl() {
         bestSellerView.orderSegmentedControl.addTarget(self, action: #selector(segmentControlChanged), for: .valueChanged)
     }
@@ -81,7 +84,12 @@ class BestSellerVC: UIViewController {
     }
     
     private func fetchData() {
-        dataService.getNYTBooks(fromCategory: category.searchName) { (error, bestSellerBooks) in
+        self.bestSellerView.tableView.showSkeleton()
+        dataService.getBooks(fromCategory: category.searchName) { (error, bestSellerBooks) in            
+            if let error = error {
+                print("Error happedned in fetch. Error: \(error.localizedDescription)")
+            }
+            
             if let bestSellerBooks = bestSellerBooks {
                 self.books = bestSellerBooks
                 self.reloadTableView()
@@ -92,13 +100,26 @@ class BestSellerVC: UIViewController {
     private func reloadTableView() {
         DispatchQueue.main.async {
             self.bestSellerView.tableView.reloadData()
+            self.bestSellerView.tableView.hideSkeleton()
         }
     }
+    
+    private func showSkeleton() {
+//        self.bestSellerView.tableView.
+            if self.books.isEmpty {
+                self.view.showAnimatedSkeleton()
+            } else {
+                self.view.hideSkeleton(reloadDataAfter: true)
+            }
+    }
+    
+    
 
 }
 
 // MARK: Tableview Datasource
 extension BestSellerVC: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return books.count
     }

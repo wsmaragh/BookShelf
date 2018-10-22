@@ -174,8 +174,8 @@ class BestSellerDetailView: UIView {
         NSLayoutConstraint.activate([
             bookImageView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
             bookImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
-            bookImageView.widthAnchor.constraint(equalTo: safeAreaLayoutGuide.widthAnchor, multiplier: 0.7),
-            bookImageView.heightAnchor.constraint(equalTo: bookImageView.widthAnchor, multiplier: 1.3),
+            bookImageView.widthAnchor.constraint(equalTo: safeAreaLayoutGuide.widthAnchor, multiplier: 0.55),
+            bookImageView.heightAnchor.constraint(equalTo: bookImageView.widthAnchor, multiplier: 1.2),
             ])
     }
     

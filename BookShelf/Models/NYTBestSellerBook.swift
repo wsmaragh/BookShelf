@@ -63,6 +63,7 @@ struct NYTBestSellerBook: Codable {
         return reviews[0].bookReviewLink
     }
     
+    var addedExtraData: Bool = false
     var longDescription: String?
     var imageStr: String?
     

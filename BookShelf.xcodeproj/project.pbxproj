@@ -11,6 +11,7 @@
 		230D15DD217A5864002E940E /* saveFavorite.gif in Resources */ = {isa = PBXBuildFile; fileRef = 230D15DC217A5864002E940E /* saveFavorite.gif */; };
 		230EEE60217A5E3B007AB24E /* review.gif in Resources */ = {isa = PBXBuildFile; fileRef = 230EEE5F217A5E3B007AB24E /* review.gif */; };
 		230EEE62217A5F2C007AB24E /* settings.gif in Resources */ = {isa = PBXBuildFile; fileRef = 230EEE61217A5F2C007AB24E /* settings.gif */; };
+		23167030217D31EE007B94C2 /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2316702F217D31EE007B94C2 /* Testing.swift */; };
 		232BA3A621796DF1009858D5 /* WebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232BA3A521796DF1009858D5 /* WebVC.swift */; };
 		232BA3A821796F75009858D5 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232BA3A721796F75009858D5 /* WebView.swift */; };
 		239AC0CA2179173200CBF340 /* CategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239AC0C92179173200CBF340 /* CategoriesViewModel.swift */; };
@@ -18,7 +19,6 @@
 		239AC0CE21791A0B00CBF340 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239AC0CD21791A0B00CBF340 /* CategoriesView.swift */; };
 		239AC0D021791EA700CBF340 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239AC0CF21791EA700CBF340 /* UIColor+.swift */; };
 		239AC0D221791EEF00CBF340 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239AC0D121791EEF00CBF340 /* UIImage+.swift */; };
-		239AC0D621792B4300CBF340 /* CollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239AC0D521792B4300CBF340 /* CollectionViewHeader.swift */; };
 		239AC0DA21792D4C00CBF340 /* BestSellerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239AC0D921792D4C00CBF340 /* BestSellerVC.swift */; };
 		239AC0DC21792D5800CBF340 /* BestSellerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239AC0DB21792D5800CBF340 /* BestSellerView.swift */; };
 		239AC0DE21792DDA00CBF340 /* BestSellerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239AC0DD21792DDA00CBF340 /* BestSellerViewModel.swift */; };
@@ -45,6 +45,11 @@
 		23E1581E2177DDFF0090AD0C /* BookDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E1581D2177DDFF0090AD0C /* BookDataService.swift */; };
 		23E158202177DE0D0090AD0C /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E1581F2177DE0D0090AD0C /* ImageService.swift */; };
 		23E158222177E1940090AD0C /* FileManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E158212177E1940090AD0C /* FileManagerService.swift */; };
+		23F9D50C217D57AF0042B83D /* FileManageService+Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F9D50B217D57AF0042B83D /* FileManageService+Categories.swift */; };
+		23F9D510217E11C90042B83D /* OfflineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F9D50F217E11C90042B83D /* OfflineVC.swift */; };
+		23F9D512217E11FD0042B83D /* OfflineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F9D511217E11FD0042B83D /* OfflineView.swift */; };
+		23F9D516217E190D0042B83D /* NetworkAvailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F9D515217E190D0042B83D /* NetworkAvailable.swift */; };
+		6A4B2759FB1911C7C158DFDE /* Pods_BookShelf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9569C2B9295628C9022C657 /* Pods_BookShelf.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +57,7 @@
 		230D15DC217A5864002E940E /* saveFavorite.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = saveFavorite.gif; sourceTree = "<group>"; };
 		230EEE5F217A5E3B007AB24E /* review.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = review.gif; sourceTree = "<group>"; };
 		230EEE61217A5F2C007AB24E /* settings.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = settings.gif; sourceTree = "<group>"; };
+		2316702F217D31EE007B94C2 /* Testing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
 		232BA3A521796DF1009858D5 /* WebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebVC.swift; sourceTree = "<group>"; };
 		232BA3A721796F75009858D5 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		239AC0C92179173200CBF340 /* CategoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewModel.swift; sourceTree = "<group>"; };
@@ -59,7 +65,6 @@
 		239AC0CD21791A0B00CBF340 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
 		239AC0CF21791EA700CBF340 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		239AC0D121791EEF00CBF340 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
-		239AC0D521792B4300CBF340 /* CollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeader.swift; sourceTree = "<group>"; };
 		239AC0D921792D4C00CBF340 /* BestSellerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestSellerVC.swift; sourceTree = "<group>"; };
 		239AC0DB21792D5800CBF340 /* BestSellerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestSellerView.swift; sourceTree = "<group>"; };
 		239AC0DD21792DDA00CBF340 /* BestSellerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestSellerViewModel.swift; sourceTree = "<group>"; };
@@ -88,6 +93,13 @@
 		23E1581D2177DDFF0090AD0C /* BookDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDataService.swift; sourceTree = "<group>"; };
 		23E1581F2177DE0D0090AD0C /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		23E158212177E1940090AD0C /* FileManagerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerService.swift; sourceTree = "<group>"; };
+		23F9D50B217D57AF0042B83D /* FileManageService+Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManageService+Categories.swift"; sourceTree = "<group>"; };
+		23F9D50F217E11C90042B83D /* OfflineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineVC.swift; sourceTree = "<group>"; };
+		23F9D511217E11FD0042B83D /* OfflineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineView.swift; sourceTree = "<group>"; };
+		23F9D515217E190D0042B83D /* NetworkAvailable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAvailable.swift; sourceTree = "<group>"; };
+		ADD6026DD47B6E07FF10EE23 /* Pods-BookShelf.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookShelf.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BookShelf/Pods-BookShelf.debug.xcconfig"; sourceTree = "<group>"; };
+		CC5A6B8D2E231DE81DB52DDE /* Pods-BookShelf.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookShelf.release.xcconfig"; path = "Pods/Target Support Files/Pods-BookShelf/Pods-BookShelf.release.xcconfig"; sourceTree = "<group>"; };
+		E9569C2B9295628C9022C657 /* Pods_BookShelf.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BookShelf.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A4B2759FB1911C7C158DFDE /* Pods_BookShelf.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,7 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				239AC0CD21791A0B00CBF340 /* CategoriesView.swift */,
-				239AC0D521792B4300CBF340 /* CollectionViewHeader.swift */,
 				239AC0CB2179182500CBF340 /* CategoryCell.swift */,
 				23E157FA2177DADE0090AD0C /* CategoryVC.swift */,
 			);
@@ -170,6 +182,8 @@
 			children = (
 				23E157F72177DADE0090AD0C /* BookShelf */,
 				23E157F62177DADE0090AD0C /* Products */,
+				66FDA704D1D4155F18C49C56 /* Pods */,
+				BEF9EA1FFA3652B432F4CFBF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -211,6 +225,7 @@
 				23B4BA64217A768100199F20 /* Favorite */,
 				23DE35E5217A1C6000854AC5 /* Web */,
 				23DE35E6217A1C6C00854AC5 /* Settings */,
+				23F9D513217E12A30042B83D /* Offline */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -247,8 +262,37 @@
 				23E1581D2177DDFF0090AD0C /* BookDataService.swift */,
 				23E1581F2177DE0D0090AD0C /* ImageService.swift */,
 				23E158212177E1940090AD0C /* FileManagerService.swift */,
+				23F9D50B217D57AF0042B83D /* FileManageService+Categories.swift */,
+				2316702F217D31EE007B94C2 /* Testing.swift */,
+				23F9D515217E190D0042B83D /* NetworkAvailable.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		23F9D513217E12A30042B83D /* Offline */ = {
+			isa = PBXGroup;
+			children = (
+				23F9D511217E11FD0042B83D /* OfflineView.swift */,
+				23F9D50F217E11C90042B83D /* OfflineVC.swift */,
+			);
+			path = Offline;
+			sourceTree = "<group>";
+		};
+		66FDA704D1D4155F18C49C56 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				ADD6026DD47B6E07FF10EE23 /* Pods-BookShelf.debug.xcconfig */,
+				CC5A6B8D2E231DE81DB52DDE /* Pods-BookShelf.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		BEF9EA1FFA3652B432F4CFBF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E9569C2B9295628C9022C657 /* Pods_BookShelf.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,9 +302,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 23E158072177DADF0090AD0C /* Build configuration list for PBXNativeTarget "BookShelf" */;
 			buildPhases = (
+				26C3E0C9503B87C7C33AB3B3 /* [CP] Check Pods Manifest.lock */,
 				23E157F12177DADE0090AD0C /* Sources */,
 				23E157F22177DADE0090AD0C /* Frameworks */,
 				23E157F32177DADE0090AD0C /* Resources */,
+				2BC763E7578F050B6905576C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -322,19 +368,63 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		26C3E0C9503B87C7C33AB3B3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BookShelf-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2BC763E7578F050B6905576C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-BookShelf/Pods-BookShelf-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BookShelf/Pods-BookShelf-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		23E157F12177DADE0090AD0C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23F9D516217E190D0042B83D /* NetworkAvailable.swift in Sources */,
 				239AC0E22179603200CBF340 /* BestSellerDVC.swift in Sources */,
 				23B4BA63217A6C1000199F20 /* FavoriteVC.swift in Sources */,
 				23E158162177DBDF0090AD0C /* APIKeys.swift in Sources */,
-				239AC0D621792B4300CBF340 /* CollectionViewHeader.swift in Sources */,
 				239AC0E021792E5B00CBF340 /* BookCell.swift in Sources */,
 				239AC0D021791EA700CBF340 /* UIColor+.swift in Sources */,
 				239AC0CC2179182500CBF340 /* CategoryCell.swift in Sources */,
 				239AC0D221791EEF00CBF340 /* UIImage+.swift in Sources */,
+				23F9D50C217D57AF0042B83D /* FileManageService+Categories.swift in Sources */,
 				239AC0E42179607000CBF340 /* BestSellerDetailView.swift in Sources */,
 				23E157FB2177DADE0090AD0C /* CategoryVC.swift in Sources */,
 				23B4BA66217A76A400199F20 /* FavoriteEmptyView.swift in Sources */,
@@ -345,6 +435,7 @@
 				23DE35E4217A1C1300854AC5 /* SettingsVC.swift in Sources */,
 				23E158112177DB6F0090AD0C /* GoogleBook.swift in Sources */,
 				23E1581C2177DD920090AD0C /* UserDefaultsService.swift in Sources */,
+				23F9D510217E11C90042B83D /* OfflineVC.swift in Sources */,
 				23B4BA61217A6BBD00199F20 /* FavoriteView.swift in Sources */,
 				239AC0DC21792D5800CBF340 /* BestSellerView.swift in Sources */,
 				239AC0CE21791A0B00CBF340 /* CategoriesView.swift in Sources */,
@@ -352,10 +443,12 @@
 				23E158202177DE0D0090AD0C /* ImageService.swift in Sources */,
 				239AC0CA2179173200CBF340 /* CategoriesViewModel.swift in Sources */,
 				23DE35E8217A1F4E00854AC5 /* SettingsView.swift in Sources */,
+				23167030217D31EE007B94C2 /* Testing.swift in Sources */,
 				23E158182177DC490090AD0C /* NYTBookCategory.swift in Sources */,
 				239AC0DA21792D4C00CBF340 /* BestSellerVC.swift in Sources */,
 				232BA3A621796DF1009858D5 /* WebVC.swift in Sources */,
 				23E1581E2177DDFF0090AD0C /* BookDataService.swift in Sources */,
+				23F9D512217E11FD0042B83D /* OfflineView.swift in Sources */,
 				23E158222177E1940090AD0C /* FileManagerService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -492,6 +585,7 @@
 		};
 		23E158082177DADF0090AD0C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ADD6026DD47B6E07FF10EE23 /* Pods-BookShelf.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -510,6 +604,7 @@
 		};
 		23E158092177DADF0090AD0C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CC5A6B8D2E231DE81DB52DDE /* Pods-BookShelf.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

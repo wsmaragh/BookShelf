@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PromiseKit
 
 enum NetworkError {
     case badURL
@@ -32,10 +33,16 @@ struct BookDataService {
             return
         }
         
-        let task =  session.dataTask(with: url, completionHandler: { (data, response, error) in
+        if let savedCategories = FileManagerService.shared.getCategories() {
+            completion(nil, savedCategories)
+            return
+        }
+        
+        let task = session.dataTask(with: url, completionHandler: { (data, response, error) in
            
             if let error = error {
                 completion(NetworkError.other(error), nil)
+                return
             }
                 
             if let response = response {
@@ -46,6 +53,7 @@ struct BookDataService {
                 }
             } else {
                 completion(NetworkError.noResponse, nil)
+                return
             }
             
             
@@ -54,11 +62,15 @@ struct BookDataService {
                     let categoriesJson = try JSONDecoder().decode(NYTBookCategoriesJSON.self, from: data)
                     let categoryNames = categoriesJson.results.sorted(by: {$0.displayName < $1.displayName})
                     completion(nil, categoryNames)
+                    FileManagerService.shared.saveCategories(categories: categoryNames)
+                    return
                 } catch let jsonError {
                     completion(NetworkError.couldNotParseJSON(jsonError), nil)
+                    return
                 }
             } else {
                 completion(NetworkError.noDataReceived, nil)
+                return
             }
             
         })
@@ -67,7 +79,7 @@ struct BookDataService {
     }
     
     
-    func getNYTBooks(fromCategory categoryName: String, completion: @escaping (Error?, [NYTBestSellerBook]?) -> Void) {
+    func getBooks(fromCategory categoryName: String, completion: @escaping (Error?, [NYTBestSellerBook]?) -> Void) {
                 
         let endpointForBooksInCategory = "https://api.nytimes.com/svc/books/v3/lists.json?api-key=\(APIKeys.NYTBookApiKey)&list=\(categoryName)"
         
@@ -78,52 +90,51 @@ struct BookDataService {
             if let error = error {
                 completion(error, nil)
             }
-                
+            
             else if let data = data {
                 do {
-                    
                     let nytBooksInCategoryJson = try JSONDecoder().decode(NYTBookJSON.self, from: data)
                     let nytBooksInCategory = nytBooksInCategoryJson.results.sorted(by: {$0.rank < $1.rank})
                     completion(nil, nytBooksInCategory)
+                } catch {
+                    print("Creating Custom Books - Decoding Error: \(error.localizedDescription)")
                 }
-                catch {
-                    print("Creating Custom Books - Decoding Error: \(error.localizedDescription)")}
             }
-            
         })
         
         task.resume()
     }
+    
+    
 
+    func getGoogleBook(fromISBN isbn10: String, completion: @escaping (Error?, GoogleBook?) -> Void) {
+        
+        let endpoint = "https://www.googleapis.com/books/v1/volumes?key=AIzaSyAfTT11DwiNy9y_6gwISzynUN_jRESns3Q&q=isbn:\(isbn10)"
 
-//    func getGoogleBook(fromISBN isbn10: String, isbn13: String, completion: @escaping (Error?, GoogleBook?) -> Void) {
-//
-//        let endpoint = "https://www.googleapis.com/books/v1/volumes?q=isbn:\(isbn10)&key=\(APIKeys.GoogleBookApiKey)"
-//
-//        guard let googleBookDataUrl = URL(string: endpoint) else {return}
-//
-//        let task =  URLSession.shared.dataTask(with: googleBookDataUrl, completionHandler: { (data, response, error) in
-//
-//            if let error = error {
-//                completion(error, nil)
-//            }
-//
-//            else if let data = data {
-//                do {
-//                    let googleBookJson = try JSONDecoder().decode(GoogleBookJSON.self, from: data)
-//                    let googleBookData = googleBookJson.items[0].volumeInfo
-//                    completion(nil, googleBookData)
-//                }
-//                catch {
-//                    print("Google Book - Doesnt Exist - using default info instead.  Code: \(error.localizedDescription)")
-//
-//                    let book = GoogleBook()
-//                    completion(nil, googleBookData)
-//                }
-//            }
-//
-//        })
-//        task.resume()
-//    }
+        guard let googleBookDataUrl = URL(string: endpoint) else {
+            print("Error getting book url")
+            return
+        }
+
+        let task =  URLSession.shared.dataTask(with: googleBookDataUrl, completionHandler: { (data, response, error) in
+
+            if let error = error {
+                completion(error, nil)
+            }
+
+            else if let data = data {
+                do {
+                    let googleBookJson = try JSONDecoder().decode(GoogleBookJSON.self, from: data)
+                    let googleBookData = googleBookJson.items[0].volumeInfo
+                    completion(nil, googleBookData)
+                }
+                catch {
+                    print("Google Book - Doesnt Exist. Error Code: \(error.localizedDescription)")
+                }
+            }
+
+        })
+        task.resume()
+    }
     
 }

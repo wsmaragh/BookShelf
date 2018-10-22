@@ -22,7 +22,7 @@ struct UserDefaultsService {
     let defaults = UserDefaults.standard
     
     
-    let preferredOrder = "preferredOrder"
+    private let preferredOrder = "preferredOrder"
     
     func setPreferredOrder(order: PreferredOrder){
         defaults.set(order.rawValue, forKey: preferredOrder)
@@ -33,6 +33,17 @@ struct UserDefaultsService {
             return PreferredOrder.rank
         }
         return order == "rank" ? PreferredOrder.rank : PreferredOrder.weeksOnList
+    }
+
+    
+    private let categoryUpdated = "categoryUpdated"
+    
+    func setCategoryUpdated(date: Date){
+        defaults.set(date, forKey: categoryUpdated)
+    }
+    
+    func getCategoryUpdated() -> Date? {
+        return defaults.object(forKey: categoryUpdated) as? Date
     }
 
 }

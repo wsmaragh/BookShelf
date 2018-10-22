@@ -149,10 +149,15 @@ class BookCell: UITableViewCell {
     }
     
     func configureCell(book: NYTBestSellerBook) {
-        bookImageView.loadImage(imageURLString: "http://covers.openlibrary.org/b/isbn/\(book.isbn10)-S.jpg?default=false")
         titleLabel.text = book.title
         authorLabel.text = book.contributor
         rankLabel.text = "Rank: \(book.rank)"
         weeksOnListLabel.text = "Weeks: \(book.weeksOnList)"
+        
+        if let imageStr = book.imageStr {
+            bookImageView.loadImage(imageURLString: imageStr)
+        } else {
+            bookImageView.loadImage(imageURLString: "http://covers.openlibrary.org/b/isbn/\(book.isbn10)-S.jpg?default=false")
+        }        
     }
 }
