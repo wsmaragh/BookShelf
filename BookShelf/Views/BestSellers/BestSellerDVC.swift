@@ -23,9 +23,13 @@ class BestSellerDVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func loadView() {
+        view = bestSellerDetailView
+        bestSellerDetailView.configureView(book: book)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCustomView()
         setupNavBar()
         bestSellerDetailView.bookReviewButton.addTarget(self, action: #selector(bookReviewButtonPressed), for: .touchUpInside)
         bestSellerDetailView.amazonButton.addTarget(self, action: #selector(amazonButtonPressed), for: .touchUpInside)
@@ -35,11 +39,6 @@ class BestSellerDVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.title = book.categoryName
-    }
-    
-    private func setupCustomView() {
-        self.view = bestSellerDetailView
-        bestSellerDetailView.configureView(book: book)
     }
     
     private func setupNavBar(){

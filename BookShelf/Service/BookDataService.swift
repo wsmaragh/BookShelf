@@ -19,9 +19,51 @@ enum NetworkError {
 }
 
 
+typealias BooksDict = [String: [NYTBestSellerBook]]
+
 struct BookDataService {
     
     private let session = URLSession(configuration: URLSessionConfiguration.default)
+    
+    
+    func getBooksForAllCategories(completion: @escaping ([NYTBookCategory], BooksDict)->Void){
+        var categories = [NYTBookCategory]()
+        var allBooks = BooksDict()
+        
+        getBookCategories { (error, onlineCategories) in
+            if let onlineCategories = onlineCategories {
+                categories = onlineCategories
+            }
+        }
+        
+        let dispatchGroup = DispatchGroup()
+        
+        
+        for i in 0..<categories.count {
+                
+            let category = categories[i]
+            
+            dispatchGroup.enter()
+            getBooksInCategory(fromCategory: category.searchName) { (error, bestSellerBooks) in
+                if let error = error {
+                    print("Error happedned in fetch. Error: \(error.localizedDescription)")
+                }
+                
+                if let bestSellerBooks = bestSellerBooks {
+                    allBooks[category.searchName] = bestSellerBooks
+                    print(category, " loaded")
+                    dispatchGroup.leave()
+                }
+            }
+            
+        }
+        
+   
+        dispatchGroup.notify(queue: .main) {
+            print("Finished all requests.")
+            completion(categories, allBooks)
+        }
+    }
     
     
     func getBookCategories(completion: @escaping (NetworkError?, [NYTBookCategory]?)->Void) {
@@ -79,7 +121,7 @@ struct BookDataService {
     }
     
     
-    func getBooks(fromCategory categoryName: String, completion: @escaping (Error?, [NYTBestSellerBook]?) -> Void) {
+    func getBooksInCategory(fromCategory categoryName: String, completion: @escaping (Error?, [NYTBestSellerBook]?) -> Void) {
                 
         let endpointForBooksInCategory = "https://api.nytimes.com/svc/books/v3/lists.json?api-key=\(APIKeys.NYTBookApiKey)&list=\(categoryName)"
         
@@ -97,13 +139,17 @@ struct BookDataService {
                     let nytBooksInCategory = nytBooksInCategoryJson.results.sorted(by: {$0.rank < $1.rank})
                     completion(nil, nytBooksInCategory)
                 } catch {
-                    print("Creating Custom Books - Decoding Error: \(error.localizedDescription)")
+                    print()
+                    print("Error decoding \(categoryName) books.")
+                    print("Error: \(error.localizedDescription)")
+                    print()
                 }
             }
         })
         
         task.resume()
     }
+
     
     
 

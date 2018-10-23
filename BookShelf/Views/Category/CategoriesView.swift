@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SkeletonView
 
 class CategoriesView: UIView {
     
@@ -46,8 +45,6 @@ class CategoriesView: UIView {
     
     private func commonInit() {
         backgroundColor = .white
-//        isSkeletonable = true
-//        self.collectionView.isSkeletonable = true
         setupViews()
     }
     

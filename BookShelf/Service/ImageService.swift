@@ -58,32 +58,76 @@ class ImageCacheService {
 
 
 extension UIImageView {
-    
-    func loadImage(imageURLString: String) {
-        let spinner: UIActivityIndicatorView = {
-            let spinner = UIActivityIndicatorView()
-            spinner.style = .white
-            return spinner
-        }()
         
-        self.addSubview(spinner)
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            spinner.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: self.centerYAnchor)
-            ])
+    func loadImage(imageURLString: String?, secondaryURLStr: String?, localImageStr: String = "noImage") {
         
-        ImageService.shared.getImage(from: imageURLString) { (image) in
-            DispatchQueue.main.async {
-                spinner.startAnimating()
-                spinner.isHidden = false
-                self.image = nil
-                self.image = image
-                spinner.stopAnimating()
-                spinner.isHidden = true
+        if let imageStr = imageURLString {
+            if imageStr.contains("http") {
+                ImageService.shared.getImage(from: imageStr) { (image) in
+                    
+                    DispatchQueue.main.async {
+                        let spinner: UIActivityIndicatorView = {
+                            let spinner = UIActivityIndicatorView()
+                            spinner.style = .white
+                            return spinner
+                        }()
+                        
+                        self.addSubview(spinner)
+                        spinner.translatesAutoresizingMaskIntoConstraints = false
+                        NSLayoutConstraint.activate([
+                            spinner.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+                            spinner.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+                            ])
+                        
+                        spinner.startAnimating()
+                        spinner.isHidden = false
+                        self.image = image
+                        spinner.stopAnimating()
+                        spinner.isHidden = true
+                        return
+                    }
+                }
+            } else if imageStr != "" {
+                    self.image =  UIImage(named: imageStr)
+                    return
             }
         }
+        
+        
+        if let secondaryImageStr = secondaryURLStr {
+            if secondaryImageStr.contains("http") {
+                ImageService.shared.getImage(from: secondaryImageStr) { (image) in
+                    
+                    DispatchQueue.main.async {
+                        let spinner: UIActivityIndicatorView = {
+                            let spinner = UIActivityIndicatorView()
+                            spinner.style = .white
+                            return spinner
+                        }()
+                        
+                        self.addSubview(spinner)
+                        spinner.translatesAutoresizingMaskIntoConstraints = false
+                        NSLayoutConstraint.activate([
+                            spinner.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+                            spinner.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+                            ])
+                        
+                        spinner.startAnimating()
+                        spinner.isHidden = false
+                        self.image = image
+                        spinner.stopAnimating()
+                        spinner.isHidden = true
+                        return
+                    }
+                }
+            } else if secondaryImageStr != "" {
+                self.image =  UIImage(named: secondaryImageStr)
+                return
+            }
+        }
+            
+
+        self.image = UIImage(named: localImageStr)
     }
     
 }
-

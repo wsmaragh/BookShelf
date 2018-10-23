@@ -13,18 +13,21 @@ class CategoryCell: UICollectionViewCell {
 
     lazy var label: UILabel = {
         let label = UILabel()
+        label.text = " "
+        label.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
         label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         label.textAlignment = .center
         label.layer.opacity = 0.9
         label.textColor = UIColor.white
         label.numberOfLines = 0
+        label.isSkeletonable = true
         return label
     }()
     
     static var cellID: String {
         return String(describing: self)
     }
-    
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
         isSkeletonable = true
@@ -41,7 +44,7 @@ class CategoryCell: UICollectionViewCell {
         setupViews()
         self.layer.masksToBounds = true
         self.layer.cornerRadius = 6
-        self.backgroundColor = UIColor.getRandomColor()
+        self.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
     }
     
     private func setupViews() {
@@ -70,6 +73,12 @@ class CategoryCell: UICollectionViewCell {
     
     func configureCell(category: NYTBookCategory) {
         self.label.text = category.displayName
+        self.backgroundColor = UIColor.getRandomColor()
+        removeBackgroundSkeleton()
     }
-
+    
+    func removeBackgroundSkeleton() {
+        label.backgroundColor = self.backgroundColor
+    }
+    
 }

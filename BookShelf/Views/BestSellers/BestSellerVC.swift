@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SkeletonView
 
 
 class BestSellerVC: UIViewController {
@@ -18,11 +17,7 @@ class BestSellerVC: UIViewController {
 
     var category: NYTBookCategory!
     
-    var books: [NYTBestSellerBook] = [] {
-        didSet {
-            self.reloadTableView()
-        }
-    }
+    var books: [NYTBestSellerBook] = []
     
     init(category: NYTBookCategory) {
         super.init(nibName: nil, bundle: nil)
@@ -33,19 +28,20 @@ class BestSellerVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func loadView() {
+        view = bestSellerView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchData()
-        setupCustomView()
         setupNavBar()
         setupSegmentedControl()
         setupTableView()
     }
-
-    private func setupCustomView() {
-        self.view = bestSellerView
-    }
     
+
+
     private func setupNavBar(){
         self.navigationItem.title = category.displayName
         let rightBarButton = UIBarButtonItem(image: UIImage(named: "settings"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(settingsButtonPressed))
@@ -84,8 +80,7 @@ class BestSellerVC: UIViewController {
     }
     
     private func fetchData() {
-        self.bestSellerView.tableView.showSkeleton()
-        dataService.getBooks(fromCategory: category.searchName) { (error, bestSellerBooks) in            
+        dataService.getBooksInCategory(fromCategory: category.searchName) { (error, bestSellerBooks) in            
             if let error = error {
                 print("Error happedned in fetch. Error: \(error.localizedDescription)")
             }
@@ -100,20 +95,8 @@ class BestSellerVC: UIViewController {
     private func reloadTableView() {
         DispatchQueue.main.async {
             self.bestSellerView.tableView.reloadData()
-            self.bestSellerView.tableView.hideSkeleton()
         }
     }
-    
-    private func showSkeleton() {
-//        self.bestSellerView.tableView.
-            if self.books.isEmpty {
-                self.view.showAnimatedSkeleton()
-            } else {
-                self.view.hideSkeleton(reloadDataAfter: true)
-            }
-    }
-    
-    
 
 }
 
@@ -121,13 +104,19 @@ class BestSellerVC: UIViewController {
 extension BestSellerVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(books.count)
+        if books.isEmpty { return 10}
         return books.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: BookCell.cellID, for: indexPath) as! BookCell
-        let book = books[indexPath.row]
-        cell.configureCell(book: book)
+        
+        if !books.isEmpty {
+            let book = books[indexPath.row]
+            cell.configureCell(book: book)
+        }
+        
         return cell
     }
 

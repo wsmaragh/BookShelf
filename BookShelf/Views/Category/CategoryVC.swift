@@ -29,51 +29,42 @@ class CategoryVC: UIViewController {
         }
     }
     
+    var booksDict: BooksDict = [:]
+    
+    var startup: Bool = true
+    
+    override func viewWillAppear(_ animated: Bool) {
+//        if startup {
+//            presentLaunchVideoScreen()
+//            startup = false
+//        }
+    }
+    
+    override func loadView() {
+        view = categoriesView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
         setupSearchController()
-        setupCustomView()
         setupCollectionView()
         makeSkeletonable()
         networkCheck()
     }
     
-    private func networkCheck() {
-        if NetworkAvailable.shared.reachability.connection != .none {
-            fetchCategories()
-        } else {
-            showOfflineVC()
+    private func presentLaunchVideoScreen() {
+        dataService.getBooksForAllCategories { (onlineCategories, onlineBooksDict) in
+            self.categories = onlineCategories
+            self.booksDict = onlineBooksDict
         }
+        let loadingVC = LoadingVC()
+        loadingVC.modalPresentationStyle = .overFullScreen
+        loadingVC.modalTransitionStyle = .crossDissolve
+        self.present(loadingVC, animated: true, completion: nil)
         
-        NetworkAvailable.shared.reachability.whenUnreachable = { reachability in
-            self.showOfflineVC()
-        }
     }
-    
-    private func showOfflineVC() {
-        let offlineVC = OfflineVC()
-        offlineVC.modalTransitionStyle = .crossDissolve
-        offlineVC.modalPresentationStyle = .overFullScreen
-        self.present(offlineVC, animated: true, completion: nil)
-    }
-    
-    private func showSkeleton() {
-        self.categoriesView.collectionView.prepareSkeleton(completion: { done in
-            if self.categories.isEmpty {
-                self.view.showAnimatedSkeleton()
-            } else {
-                self.view.hideSkeleton(reloadDataAfter: true)
-            }
-        })
-    }
-    
-    private func hideSkeleton() {
-        self.categoriesView.collectionView.prepareSkeleton(completion: { done in
-            self.view.hideSkeleton()
-        })
-    }
-    
+
     private func setupNavBar(){
         self.navigationItem.title = "Book Categories"
 
@@ -108,18 +99,6 @@ class CategoryVC: UIViewController {
         searchController.definesPresentationContext = true
     }
     
-    private func setupCustomView() {
-        self.view = categoriesView
-
-    }
-    
-    func makeSkeletonable() {
-        view.isSkeletonable = true
-        categoriesView.isSkeletonable = true
-        self.categoriesView.collectionView.isSkeletonable = true
-        showSkeleton()
-    }
-    
     private func setupCollectionView() {
         self.categoriesView.collectionView.delegate = self
         self.categoriesView.collectionView.dataSource = self
@@ -132,13 +111,23 @@ class CategoryVC: UIViewController {
         }
     }
     
-    private func fetchCategories() {
-        dataService.getBookCategories { (networkError, bookCategories) in
-            if let bookCategories = bookCategories {
-                self.categories = bookCategories
-                self.showSkeleton()
+    func makeSkeletonable() {
+        view.isSkeletonable = true
+        categoriesView.isSkeletonable = true
+        self.categoriesView.collectionView.isSkeletonable = true
+        self.searchController.searchBar.isSkeletonable = true
+        self.navigationController?.navigationBar.isSkeletonable = true
+        showOrHideSkeleton()
+    }
+    
+    private func showOrHideSkeleton() {
+        self.categoriesView.collectionView.prepareSkeleton(completion: { done in
+            if self.categories.isEmpty {
+                self.view.showAnimatedSkeleton()
+            } else {
+                self.view.hideSkeleton(reloadDataAfter: true)
             }
-        }
+        })
     }
     
     func filterContentForSearchText(_ searchText: String) {
@@ -154,6 +143,34 @@ class CategoryVC: UIViewController {
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
+    }
+    
+    private func networkCheck() {
+        if NetworkAvailable.shared.reachability.connection != .none {
+            fetchCategories()
+        } else {
+            showOfflineVC()
+        }
+        
+        NetworkAvailable.shared.reachability.whenUnreachable = { reachability in
+            self.showOfflineVC()
+        }
+    }
+    
+    private func fetchCategories() {
+        dataService.getBookCategories { (networkError, bookCategories) in
+            if let bookCategories = bookCategories {
+                self.categories = bookCategories
+                self.showOrHideSkeleton()
+            }
+        }
+    }
+    
+    private func showOfflineVC() {
+        let offlineVC = OfflineVC()
+        offlineVC.modalTransitionStyle = .crossDissolve
+        offlineVC.modalPresentationStyle = .overFullScreen
+        self.present(offlineVC, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -176,7 +193,6 @@ extension CategoryVC: SkeletonCollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.cellID, for: indexPath) as! CategoryCell
-        cell.isSkeletonable = true
         let category = searchController.isActive ? filteredCategories[indexPath.item] : categories[indexPath.item]
         cell.configureCell(category: category)
         return cell

@@ -26,6 +26,10 @@ class WebVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func loadView() {
+        view = webView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
@@ -34,7 +38,6 @@ class WebVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     private func setupNavBar(){
         self.navigationController?.navigationBar.topItem?.title = ""
-        self.view = webView
     }
     
     private func setupWebView(){

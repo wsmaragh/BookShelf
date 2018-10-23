@@ -12,13 +12,12 @@ class BestSellerDetailView: UIView {
 
     lazy var bookImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: "bookCover")
         return iv
     }()
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Book Title"
+        label.text = " "
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textAlignment = .left
         label.layer.opacity = 0.9
@@ -29,7 +28,7 @@ class BestSellerDetailView: UIView {
     
     lazy var authorLabel: UILabel = {
         let label = UILabel()
-        label.text = "By Author"
+        label.text = " "
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.textAlignment = .left
         label.layer.opacity = 0.9
@@ -40,7 +39,7 @@ class BestSellerDetailView: UIView {
     
     lazy var rankLabel: UILabel = {
         let label = UILabel()
-        label.text = "Rank: XX"
+        label.text = " "
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.textAlignment = .left
         label.layer.opacity = 0.9
@@ -51,7 +50,7 @@ class BestSellerDetailView: UIView {
     
     lazy var weeksOnListLabel: UILabel = {
         let label = UILabel()
-        label.text = "Weeks: XX"
+        label.text = " "
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.textAlignment = .left
         label.layer.opacity = 0.9
@@ -62,7 +61,7 @@ class BestSellerDetailView: UIView {
     
     lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "Description: XX"
+        label.text = " "
         label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         label.textAlignment = .center
         label.layer.opacity = 0.9
@@ -108,11 +107,38 @@ class BestSellerDetailView: UIView {
     
     private func commonInit() {
         backgroundColor = .white
+        roundedCorners()
+        addCustomSkeleton()
+        setupViews()
+    }
+    
+    func roundedCorners() {
         amazonButton.layer.cornerRadius = 6
         amazonButton.layer.masksToBounds = true
         bookReviewButton.layer.cornerRadius = 6
         bookReviewButton.layer.masksToBounds = true
-        setupViews()
+    }
+    
+    func addCustomSkeleton() {
+        self.isUserInteractionEnabled = false
+        bookImageView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+        titleLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+        authorLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+        rankLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+        weeksOnListLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+        descriptionLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+
+    }
+    
+    func removeCustomSkeleton() {
+        self.isUserInteractionEnabled = true
+        bookImageView.backgroundColor = self.backgroundColor
+        titleLabel.backgroundColor = self.backgroundColor
+        authorLabel.backgroundColor = self.backgroundColor
+        rankLabel.backgroundColor = self.backgroundColor
+        weeksOnListLabel.backgroundColor = self.backgroundColor
+        descriptionLabel.backgroundColor = self.backgroundColor
+
     }
     
     private func setupViews() {
@@ -222,7 +248,7 @@ class BestSellerDetailView: UIView {
     }
     
     func configureView(book: NYTBestSellerBook) {
-        bookImageView.loadImage(imageURLString: "http://covers.openlibrary.org/b/isbn/\(book.isbn10)-M.jpg?default=false")
+        bookImageView.loadImage(imageURLString: book.imageStr, secondaryURLStr: "http://covers.openlibrary.org/b/isbn/\(book.isbn10)-M.jpg?default=false", localImageStr: "bookCover")
         titleLabel.text = book.title
         authorLabel.text = book.contributor
         rankLabel.text = "Rank: \(book.rank)"
@@ -236,6 +262,8 @@ class BestSellerDetailView: UIView {
         } else {
             saveButton.setImage(UIImage(named: "like_empty"), for: .normal)
         }
+        
+        removeCustomSkeleton()
     }
 
 }

@@ -21,20 +21,19 @@ class FavoriteVC: UIViewController {
         }
     }
     
+    override func loadView() {
+        view = favoriteView
+
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchData()
-        setupCustomView()
         setupNavBar()
         setupTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         books = FileManagerService.shared.getFavoriteBooks()
-    }
-    
-    private func setupCustomView() {
-        self.view = favoriteView
     }
     
     private func setupNavBar(){

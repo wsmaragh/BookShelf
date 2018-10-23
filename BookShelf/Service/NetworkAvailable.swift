@@ -27,7 +27,7 @@ class NetworkAvailable: NSObject {
             object: reachability
         )
         
-        reachability.allowsCellularConnection = false
+        reachability.allowsCellularConnection = false //used to test only wifi on phone
         
         do {
             try reachability.startNotifier()
@@ -37,16 +37,11 @@ class NetworkAvailable: NSObject {
     }
     
     @objc func networkStatusChanged(_ notification: Notification) {
-        print("Network Status changed")
-        
+        print("Network Status changed") //
     }
     
     static func stopNotifier() -> Void {
-        do {
-            try (NetworkAvailable.shared.reachability).stopNotifier()
-        } catch {
-            print("Error stopping notifier")
-        }
+        NetworkAvailable.shared.reachability.stopNotifier()
     }
     
 }

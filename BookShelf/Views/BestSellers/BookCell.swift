@@ -12,50 +12,54 @@ class BookCell: UITableViewCell {
 
     lazy var bookImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: "bookCover")
+        iv.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
         return iv
     }()
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Book Title"
+        label.text = " "
         label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         label.textAlignment = .left
         label.layer.opacity = 0.9
         label.textColor = UIColor.darkGray
+        label.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
         label.numberOfLines = 2
         return label
     }()
     
     lazy var authorLabel: UILabel = {
         let label = UILabel()
-        label.text = "By Author"
+        label.text = " "
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textAlignment = .left
         label.layer.opacity = 0.9
         label.textColor = UIColor.darkGray
+        label.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
         label.numberOfLines = 0
         return label
     }()
     
     lazy var rankLabel: UILabel = {
         let label = UILabel()
-        label.text = "Rank: XX"
+        label.text = " "
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
         label.textAlignment = .left
         label.layer.opacity = 0.9
         label.textColor = UIColor.lightGray
+        label.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
         label.numberOfLines = 0
         return label
     }()
     
     lazy var weeksOnListLabel: UILabel = {
         let label = UILabel()
-        label.text = "Weeks: XX"
+        label.text = " "
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
         label.textAlignment = .left
         label.layer.opacity = 0.9
         label.textColor = UIColor.lightGray
+        label.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
         label.numberOfLines = 0
         return label
     }()
@@ -80,8 +84,33 @@ class BookCell: UITableViewCell {
     
     private func commonInit() {
         setupViews()
+        roundedCorners()
+        addCustomSkeleton()
+    }
+    
+    func roundedCorners() {
         self.layer.masksToBounds = true
         self.layer.cornerRadius = 6
+        bookImageView.layer.masksToBounds = true
+        bookImageView.layer.cornerRadius = 6
+    }
+    
+    func addCustomSkeleton() {
+        self.isUserInteractionEnabled = false
+        bookImageView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+        titleLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+        authorLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+        rankLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+        weeksOnListLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+    }
+    
+    func removeCustomSkeleton() {
+        self.isUserInteractionEnabled = true
+        bookImageView.backgroundColor = self.backgroundColor
+        titleLabel.backgroundColor = self.backgroundColor
+        authorLabel.backgroundColor = self.backgroundColor
+        rankLabel.backgroundColor = self.backgroundColor
+        weeksOnListLabel.backgroundColor = self.backgroundColor
     }
     
     private func setupViews() {
@@ -109,9 +138,9 @@ class BookCell: UITableViewCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: bookImageView.topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: bookImageView.trailingAnchor, constant: 8),
-            titleLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: 8),
-            titleLabel.topAnchor.constraint(equalTo: bookImageView.topAnchor)
+            titleLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16)
             ])
     }
     
@@ -122,7 +151,7 @@ class BookCell: UITableViewCell {
         NSLayoutConstraint.activate([
             authorLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
             authorLabel.leadingAnchor.constraint(equalTo: bookImageView.trailingAnchor, constant: 8),
-            authorLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: 8)
+            authorLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16)
             ])
     }
     
@@ -133,7 +162,7 @@ class BookCell: UITableViewCell {
         NSLayoutConstraint.activate([
             rankLabel.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 5),
             rankLabel.leadingAnchor.constraint(equalTo: bookImageView.trailingAnchor, constant: 8),
-            rankLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: 8)
+            rankLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
     }
 
@@ -144,7 +173,7 @@ class BookCell: UITableViewCell {
         NSLayoutConstraint.activate([
             weeksOnListLabel.topAnchor.constraint(equalTo: rankLabel.bottomAnchor, constant: 5),
             weeksOnListLabel.leadingAnchor.constraint(equalTo: bookImageView.trailingAnchor, constant: 8),
-            weeksOnListLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: 8)
+            weeksOnListLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
     }
     
@@ -154,10 +183,8 @@ class BookCell: UITableViewCell {
         rankLabel.text = "Rank: \(book.rank)"
         weeksOnListLabel.text = "Weeks: \(book.weeksOnList)"
         
-        if let imageStr = book.imageStr {
-            bookImageView.loadImage(imageURLString: imageStr)
-        } else {
-            bookImageView.loadImage(imageURLString: "http://covers.openlibrary.org/b/isbn/\(book.isbn10)-S.jpg?default=false")
-        }        
+        bookImageView.loadImage(imageURLString: book.imageStr, secondaryURLStr: "http://covers.openlibrary.org/b/isbn/\(book.isbn10)-S.jpg?default=false", localImageStr: "bookCover")
+        removeCustomSkeleton()
     }
+
 }

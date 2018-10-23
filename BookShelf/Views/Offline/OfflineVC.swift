@@ -12,9 +12,13 @@ class OfflineVC: UIViewController {
 
     let offlineView = OfflineView()
 
+    
+    override func loadView() {
+        view = offlineView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(offlineView)
         view.backgroundColor = UIColor.clear
 
         // NOTE: Works on physical phone, will not work on simulator

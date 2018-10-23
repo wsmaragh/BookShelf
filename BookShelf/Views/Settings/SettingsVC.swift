@@ -13,14 +13,18 @@ class SettingsVC: UIViewController {
 
     let settingsView = SettingsView()
     
+    override func loadView() {
+        view = settingsView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(settingsView)
         view.backgroundColor = UIColor.lightText
         view.layer.opacity = 0.5
         settingsView.doneButton.addTarget(self, action: #selector(doneButtonPressed), for: .touchUpInside)
-        
     }
+    
+
     
     @objc func doneButtonPressed(){
         dismiss(animated: true) {
