@@ -34,10 +34,10 @@ class CategoryVC: UIViewController {
     var startup: Bool = true
     
     override func viewWillAppear(_ animated: Bool) {
-//        if startup {
-//            presentLaunchVideoScreen()
-//            startup = false
-//        }
+        if startup {
+            presentLaunchVideoScreen()
+            startup = false
+        }
     }
     
     override func loadView() {
@@ -54,10 +54,11 @@ class CategoryVC: UIViewController {
     }
     
     private func presentLaunchVideoScreen() {
-        dataService.getBooksForAllCategories { (onlineCategories, onlineBooksDict) in
-            self.categories = onlineCategories
-            self.booksDict = onlineBooksDict
-        }
+        //load all books for every category
+//        dataService.getBooksForAllCategories { (onlineCategories, onlineBooksDict) in
+//            self.categories = onlineCategories
+//            self.booksDict = onlineBooksDict
+//        }
         let loadingVC = LoadingVC()
         loadingVC.modalPresentationStyle = .overFullScreen
         loadingVC.modalTransitionStyle = .crossDissolve
