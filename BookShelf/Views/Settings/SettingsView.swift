@@ -73,10 +73,10 @@ class SettingsView: UIView {
         backgroundColor = .clear
         container.layer.masksToBounds = true
         container.layer.cornerRadius = 15
-        self.doneButton.layer.cornerRadius = 6
-        self.doneButton.layer.masksToBounds = true
-        self.settingsLabel.clipsToBounds = true
-        self.settingsLabel.layer.masksToBounds = true
+        doneButton.layer.cornerRadius = 6
+        doneButton.layer.masksToBounds = true
+        settingsLabel.clipsToBounds = true
+        settingsLabel.layer.masksToBounds = true
         setupViews()
         autoConfigPrefferedOrder()
     }

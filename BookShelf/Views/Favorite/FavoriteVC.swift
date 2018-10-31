@@ -23,8 +23,8 @@ class FavoriteVC: UIViewController {
     
     override func loadView() {
         view = favoriteView
-
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchData()
@@ -68,7 +68,7 @@ class FavoriteVC: UIViewController {
     }
     
     private func reloadTableView() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [unowned self] in
             self.favoriteView.tableView.reloadData()
         }
     }
@@ -101,6 +101,14 @@ extension FavoriteVC: UITableViewDataSource {
         return 120
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let book = books[indexPath.row]
+            FileManagerService.shared.deleteFavoriteBook(book: book)
+            books.remove(at: indexPath.row)
+        }
+    }
+    
 }
 
 // MARK: Tableview Delegate
@@ -109,7 +117,7 @@ extension FavoriteVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let book = self.books[indexPath.row]
         let bestSellerDVC = BestSellerDVC(book: book)
-        self.navigationController?.pushViewController(bestSellerDVC, animated: true)
+        navigationController?.pushViewController(bestSellerDVC, animated: true)
     }
     
 }

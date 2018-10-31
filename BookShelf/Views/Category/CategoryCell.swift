@@ -42,9 +42,9 @@ class CategoryCell: UICollectionViewCell {
     
     private func commonInit() {
         setupViews()
-        self.layer.masksToBounds = true
-        self.layer.cornerRadius = 6
-        self.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+        layer.masksToBounds = true
+        layer.cornerRadius = 6
+        backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
     }
     
     private func setupViews() {
@@ -72,8 +72,8 @@ class CategoryCell: UICollectionViewCell {
     }
     
     func configureCell(category: NYTBookCategory) {
-        self.label.text = category.displayName
-        self.backgroundColor = UIColor.getRandomColor()
+        label.text = category.displayName
+        backgroundColor = UIColor.randomColor
         removeBackgroundSkeleton()
     }
     

@@ -12,7 +12,6 @@ import UIKit
 class BestSellerVC: UIViewController {
 
     let bestSellerView = BestSellerView()
-    let viewModel = CategoriesViewModel()
     let dataService = BookDataService()
 
     var category: NYTBookCategory!
@@ -25,7 +24,7 @@ class BestSellerVC: UIViewController {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
     override func loadView() {
@@ -40,19 +39,17 @@ class BestSellerVC: UIViewController {
         setupTableView()
     }
     
-
-
     private func setupNavBar(){
-        self.navigationItem.title = category.displayName
+        navigationItem.title = category.displayName
         let rightBarButton = UIBarButtonItem(image: UIImage(named: "settings"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(settingsButtonPressed))
-        self.navigationItem.rightBarButtonItem = rightBarButton
+        navigationItem.rightBarButtonItem = rightBarButton
     }
 
     @objc func settingsButtonPressed() {
         let settingsVC = SettingsVC()
         settingsVC.modalPresentationStyle = .overCurrentContext
         settingsVC.modalTransitionStyle = .crossDissolve
-        self.present(settingsVC, animated: true, completion: nil)
+        present(settingsVC, animated: true, completion: nil)
     }
 
     private func setupSegmentedControl() {
@@ -80,20 +77,21 @@ class BestSellerVC: UIViewController {
     }
     
     private func fetchData() {
-        dataService.getBooksInCategory(fromCategory: category.searchName) { (error, bestSellerBooks) in            
+        dataService.getBooksInCategory(fromCategory: category.searchName) {[weak self] (error, bestSellerBooks) in
+            guard let weakSelf = self else { return }
             if let error = error {
                 print("Error happedned in fetch. Error: \(error.localizedDescription)")
             }
             
             if let bestSellerBooks = bestSellerBooks {
-                self.books = bestSellerBooks
-                self.reloadTableView()
+                weakSelf.books = bestSellerBooks
+                weakSelf.reloadTableView()
             }
         }
     }
 
     private func reloadTableView() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [unowned self] in
             self.bestSellerView.tableView.reloadData()
         }
     }
@@ -104,7 +102,6 @@ class BestSellerVC: UIViewController {
 extension BestSellerVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(books.count)
         if books.isEmpty { return 10}
         return books.count
     }
@@ -136,7 +133,7 @@ extension BestSellerVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let book = self.books[indexPath.row]
         let bestSellerDVC = BestSellerDVC(book: book)
-        self.navigationController?.pushViewController(bestSellerDVC, animated: true)
+        navigationController?.pushViewController(bestSellerDVC, animated: true)
     }
     
 }

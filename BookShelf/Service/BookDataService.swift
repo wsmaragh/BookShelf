@@ -19,52 +19,14 @@ enum NetworkError {
 }
 
 
-typealias BooksDict = [String: [NYTBestSellerBook]]
-
 struct BookDataService {
     
-    private let session = URLSession(configuration: URLSessionConfiguration.default)
-    
-    
-    func getBooksForAllCategories(completion: @escaping ([NYTBookCategory], BooksDict)->Void){
-        var categories = [NYTBookCategory]()
-        var allBooks = BooksDict()
-        
-        getBookCategories { (error, onlineCategories) in
-            if let onlineCategories = onlineCategories {
-                categories = onlineCategories
-            }
-        }
-        
-        let dispatchGroup = DispatchGroup()
-        
-        
-        for i in 0..<categories.count {
-                
-            let category = categories[i]
-            
-            dispatchGroup.enter()
-            getBooksInCategory(fromCategory: category.searchName) { (error, bestSellerBooks) in
-                if let error = error {
-                    print("Error happedned in fetch. Error: \(error.localizedDescription)")
-                }
-                
-                if let bestSellerBooks = bestSellerBooks {
-                    allBooks[category.searchName] = bestSellerBooks
-                    print(category, " loaded")
-                    dispatchGroup.leave()
-                }
-            }
-            
-        }
-        
-   
-        dispatchGroup.notify(queue: .main) {
-            print("Finished all requests.")
-            completion(categories, allBooks)
-        }
+    init() {
+        session.configuration.requestCachePolicy = .returnCacheDataElseLoad
     }
     
+    private let session = URLSession(configuration: URLSessionConfiguration.default)
+
     
     func getBookCategories(completion: @escaping (NetworkError?, [NYTBookCategory]?)->Void) {
         
@@ -78,6 +40,18 @@ struct BookDataService {
         if let savedCategories = FileManagerService.shared.getCategories() {
             completion(nil, savedCategories)
             return
+        }
+        
+        let request = URLRequest(url: url)
+        if let cachedURLResponse = URLCache.shared.cachedResponse(for: request) {
+            do {
+                let categoriesJson = try JSONDecoder().decode(NYTBookCategoriesJSON.self, from: cachedURLResponse.data)
+                let categoryNames = categoriesJson.results.sorted(by: {$0.displayName < $1.displayName})
+                completion(nil, categoryNames)
+                return
+            } catch {
+                print("Error: \(error.localizedDescription)")
+            }
         }
         
         let task = session.dataTask(with: url, completionHandler: { (data, response, error) in
@@ -97,7 +71,6 @@ struct BookDataService {
                 completion(NetworkError.noResponse, nil)
                 return
             }
-            
             
             if let data = data {
                 do {
@@ -127,8 +100,20 @@ struct BookDataService {
         
         guard let urlForNYTBooks = URL(string: endpointForBooksInCategory) else {return}
         
-        let task =  URLSession.shared.dataTask(with: urlForNYTBooks, completionHandler: { (data, response, error) in
-            
+        let request = URLRequest(url: urlForNYTBooks)
+        
+        if let cachedURLResponse = URLCache.shared.cachedResponse(for: request) {
+            do {
+                let nytBooksInCategoryJson = try JSONDecoder().decode(NYTBookJSON.self, from: cachedURLResponse.data)
+                let nytBooksInCategory = nytBooksInCategoryJson.results.sorted(by: {$0.rank < $1.rank})
+                completion(nil, nytBooksInCategory)
+                return
+            } catch {
+                print("Error: \(error.localizedDescription)")
+            }
+        }
+        
+       let task = session.dataTask(with: request) { (data, response, error) in
             if let error = error {
                 completion(error, nil)
             }
@@ -139,35 +124,29 @@ struct BookDataService {
                     let nytBooksInCategory = nytBooksInCategoryJson.results.sorted(by: {$0.rank < $1.rank})
                     completion(nil, nytBooksInCategory)
                 } catch {
-                    print()
-                    print("Error decoding \(categoryName) books.")
-                    print("Error: \(error.localizedDescription)")
-                    print()
+                    print("Error decoding \(categoryName) books. Error: \(error.localizedDescription)")
                 }
             }
-        })
-        
+        }
         task.resume()
     }
-
     
     
-
     func getGoogleBook(fromISBN isbn10: String, completion: @escaping (Error?, GoogleBook?) -> Void) {
         
-        let endpoint = "https://www.googleapis.com/books/v1/volumes?key=AIzaSyAfTT11DwiNy9y_6gwISzynUN_jRESns3Q&q=isbn:\(isbn10)"
+        let endpoint = "https://www.googleapis.com/books/v1/volumes?key=\(APIKeys.GoogleBookApiKey)&q=isbn:\(isbn10)"
 
         guard let googleBookDataUrl = URL(string: endpoint) else {
             print("Error getting book url")
             return
         }
-
+        
         let task =  URLSession.shared.dataTask(with: googleBookDataUrl, completionHandler: { (data, response, error) in
-
+            
             if let error = error {
                 completion(error, nil)
             }
-
+                
             else if let data = data {
                 do {
                     let googleBookJson = try JSONDecoder().decode(GoogleBookJSON.self, from: data)
@@ -178,7 +157,7 @@ struct BookDataService {
                     print("Google Book - Doesnt Exist. Error Code: \(error.localizedDescription)")
                 }
             }
-
+            
         })
         task.resume()
     }

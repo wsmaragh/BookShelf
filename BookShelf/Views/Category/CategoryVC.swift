@@ -12,14 +12,13 @@ import SkeletonView
 class CategoryVC: UIViewController {
     
     let categoriesView = CategoriesView()
-    let viewModel = CategoriesViewModel()
     let dataService = BookDataService()
 
     private var searchController: UISearchController = UISearchController(searchResultsController: nil)
     
     private var categories: [NYTBookCategory] = [] {
         didSet {
-            self.reloadCollectionView()
+            reloadCollectionView()
         }
     }
 
@@ -29,7 +28,7 @@ class CategoryVC: UIViewController {
         }
     }
     
-    var booksDict: BooksDict = [:]
+    var booksDict: [String : [NYTBestSellerBook]] = [:]
     
     var startup: Bool = true
     
@@ -54,26 +53,21 @@ class CategoryVC: UIViewController {
     }
     
     private func presentLaunchVideoScreen() {
-        //load all books for every category
-//        dataService.getBooksForAllCategories { (onlineCategories, onlineBooksDict) in
-//            self.categories = onlineCategories
-//            self.booksDict = onlineBooksDict
-//        }
         let loadingVC = LoadingVC()
         loadingVC.modalPresentationStyle = .overFullScreen
         loadingVC.modalTransitionStyle = .crossDissolve
-        self.present(loadingVC, animated: true, completion: nil)
-        
+        present(loadingVC, animated: true, completion: nil)
     }
 
     private func setupNavBar(){
-        self.navigationItem.title = "Book Categories"
+        navigationItem.title = "Book Categories"
 
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
         } else {
             navigationItem.titleView = searchController.searchBar
         }
+        
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
@@ -86,6 +80,7 @@ class CategoryVC: UIViewController {
         searchController.searchBar.tintColor = .gray
         searchController.searchBar.showsCancelButton = true
         searchController.searchBar.placeholder = "Search book categories..."
+        
         if let textfield = searchController.searchBar.value(forKey: "searchField") as? UITextField {
             textfield.textColor = UIColor.darkGray
             if let backgroundview = textfield.subviews.first {
@@ -94,20 +89,21 @@ class CategoryVC: UIViewController {
                 backgroundview.clipsToBounds = true;
             }
         }
+        
         if ((searchController.searchBar.responds(to: NSSelectorFromString("searchBarStyle")))){
             searchController.searchBar.searchBarStyle = .minimal
         }
+        
         searchController.definesPresentationContext = true
     }
     
     private func setupCollectionView() {
-        self.categoriesView.collectionView.delegate = self
-        self.categoriesView.collectionView.dataSource = self
-        
+        categoriesView.collectionView.delegate = self
+        categoriesView.collectionView.dataSource = self
     }
     
     private func reloadCollectionView() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [unowned self] in
             self.categoriesView.collectionView.reloadData()
         }
     }
@@ -115,18 +111,19 @@ class CategoryVC: UIViewController {
     func makeSkeletonable() {
         view.isSkeletonable = true
         categoriesView.isSkeletonable = true
-        self.categoriesView.collectionView.isSkeletonable = true
-        self.searchController.searchBar.isSkeletonable = true
-        self.navigationController?.navigationBar.isSkeletonable = true
+        categoriesView.collectionView.isSkeletonable = true
+        searchController.searchBar.isSkeletonable = true
+        navigationController?.navigationBar.isSkeletonable = true
         showOrHideSkeleton()
     }
     
     private func showOrHideSkeleton() {
-        self.categoriesView.collectionView.prepareSkeleton(completion: { done in
-            if self.categories.isEmpty {
-                self.view.showAnimatedSkeleton()
+        categoriesView.collectionView.prepareSkeleton(completion: {[weak self] done in
+            guard let weakSelf = self else { return }
+            if weakSelf.categories.isEmpty {
+                weakSelf.view.showAnimatedSkeleton()
             } else {
-                self.view.hideSkeleton(reloadDataAfter: true)
+                weakSelf.view.hideSkeleton(reloadDataAfter: true)
             }
         })
     }
@@ -153,25 +150,27 @@ class CategoryVC: UIViewController {
             showOfflineVC()
         }
         
-        NetworkAvailable.shared.reachability.whenUnreachable = { reachability in
+        NetworkAvailable.shared.reachability.whenUnreachable = { [unowned self] reachability in
             self.showOfflineVC()
         }
     }
     
     private func fetchCategories() {
-        dataService.getBookCategories { (networkError, bookCategories) in
+        dataService.getBookCategories {[weak self] (networkError, bookCategories) in
+            guard let weakSelf = self else { return }
+            
             if let bookCategories = bookCategories {
-                self.categories = bookCategories
-                self.showOrHideSkeleton()
+                weakSelf.categories = bookCategories
+                weakSelf.showOrHideSkeleton()
             }
         }
     }
-    
+
     private func showOfflineVC() {
         let offlineVC = OfflineVC()
         offlineVC.modalTransitionStyle = .crossDissolve
         offlineVC.modalPresentationStyle = .overFullScreen
-        self.present(offlineVC, animated: true, completion: nil)
+        present(offlineVC, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -181,7 +180,7 @@ class CategoryVC: UIViewController {
 }
 
 
-// MARK:
+
 extension CategoryVC: SkeletonCollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -215,12 +214,10 @@ extension CategoryVC: SkeletonCollectionViewDataSource {
 }
 
 
-
-// MARK:
 extension CategoryVC: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let category = self.categories[indexPath.item]
+        let category = categories[indexPath.item]
         let bestSellerVC = BestSellerVC(category: category)
         self.navigationController?.pushViewController(bestSellerVC, animated: true)
     }
@@ -228,7 +225,6 @@ extension CategoryVC: UICollectionViewDelegate {
 }
 
 
-// MARK: Collectionview FlowLayout
 extension CategoryVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -243,7 +239,7 @@ extension CategoryVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: - UISearchControllerDelegate
+
 extension CategoryVC: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {

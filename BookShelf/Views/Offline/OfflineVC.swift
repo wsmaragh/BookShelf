@@ -12,7 +12,6 @@ class OfflineVC: UIViewController {
 
     let offlineView = OfflineView()
 
-    
     override func loadView() {
         view = offlineView
     }
@@ -22,10 +21,9 @@ class OfflineVC: UIViewController {
         view.backgroundColor = UIColor.clear
 
         // NOTE: Works on physical phone, will not work on simulator
-        NetworkAvailable.shared.reachability.whenReachable = { reachability in
+        NetworkAvailable.shared.reachability.whenReachable = { [unowned self] reachability in
             self.dismissView()
         }
-        
     }
     
     @objc func dismissView(){

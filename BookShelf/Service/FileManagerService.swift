@@ -14,19 +14,19 @@ class FileManagerService {
     private init(){}
     static let shared = FileManagerService()
     
+    
     static let kFavorites = "FavoriteBooks.plist"
     static let kCategories = "Categories.plist"
-    static let kBooks = "Book.plist"
+    static let kBooks = "Books.plist"
 
-    private var categories = [NYTBookCategory]()
     
+    private var categories = [NYTBookCategory]()
+    private var booksDict = [String: [NYTBestSellerBook]]()
     private var favoriteBooks = [NYTBestSellerBook]() {
         didSet {
             saveFavoriteBooks()
         }
     }
-    
-    private var books = [String: [NYTBestSellerBook]]()
     
     
     private func dataFilePath(pathName: String)->URL {
@@ -41,7 +41,6 @@ class FileManagerService {
     
 
 
-    
     
     private func saveFavoriteBooks(){
         do {
@@ -190,7 +189,8 @@ class FileManagerService {
     }
     
     
-    
+
+    // Categories
     func saveCategories(categories: [NYTBookCategory]) {
         do {
             let data = try PropertyListEncoder().encode(categories)

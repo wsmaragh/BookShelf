@@ -26,7 +26,22 @@ struct NYTBestSellerBook: Codable {
     let amazonURLString: String
     private let bookDetails: [NYTBookDetails]
     private let reviews: [BookReviews]
+
+    var addedExtraData: Bool = false
+    var longDescription: String?
+    var imageStr: String?
     
+    enum CodingKeys: String, CodingKey {
+        case categoryName = "display_name"
+        case rank
+        case weeksOnList = "weeks_on_list"
+        case amazonURLString = "amazon_product_url"
+        case bookDetails = "book_details"
+        case reviews
+    }
+}
+
+extension NYTBestSellerBook {
     var title: String {
         return bookDetails[0].title
     }
@@ -61,19 +76,6 @@ struct NYTBestSellerBook: Codable {
     
     var review: String {
         return reviews[0].bookReviewLink
-    }
-    
-    var addedExtraData: Bool = false
-    var longDescription: String?
-    var imageStr: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case categoryName = "display_name"
-        case rank
-        case weeksOnList = "weeks_on_list"
-        case amazonURLString = "amazon_product_url"
-        case bookDetails = "book_details"
-        case reviews
     }
 }
 

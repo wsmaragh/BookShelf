@@ -37,7 +37,7 @@ class WebVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
     
     private func setupNavBar(){
-        self.navigationController?.navigationBar.topItem?.title = ""
+        navigationController?.navigationBar.topItem?.title = ""
     }
     
     private func setupWebView(){

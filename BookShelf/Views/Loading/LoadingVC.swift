@@ -42,13 +42,16 @@ class LoadingVC: UIViewController {
         avPlayer.play()
         
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishedPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem)
-        
     }
     
     @objc func playerDidFinishedPlaying(notification: NSNotification) {
         if let _ = notification.object as? AVPlayerItem {
             dismiss(animated: true, completion: nil)
         }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
 }

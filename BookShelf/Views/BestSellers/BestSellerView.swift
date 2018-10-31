@@ -26,7 +26,6 @@ class BestSellerView: UIView {
         return tv
     }()
     
-    
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         commonInit()

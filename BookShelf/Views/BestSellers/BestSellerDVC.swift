@@ -20,7 +20,7 @@ class BestSellerDVC: UIViewController {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
     override func loadView() {
@@ -31,18 +31,22 @@ class BestSellerDVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
-        bestSellerDetailView.bookReviewButton.addTarget(self, action: #selector(bookReviewButtonPressed), for: .touchUpInside)
-        bestSellerDetailView.amazonButton.addTarget(self, action: #selector(amazonButtonPressed), for: .touchUpInside)
-        bestSellerDetailView.saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
+        addButtonTargets()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.title = book.categoryName
+        navigationItem.title = book.categoryName
     }
     
     private func setupNavBar(){
-        self.navigationItem.title = book.categoryName
+        navigationItem.title = book.categoryName
+    }
+    
+    private func addButtonTargets() {
+        bestSellerDetailView.bookReviewButton.addTarget(self, action: #selector(bookReviewButtonPressed), for: .touchUpInside)
+        bestSellerDetailView.amazonButton.addTarget(self, action: #selector(amazonButtonPressed), for: .touchUpInside)
+        bestSellerDetailView.saveButton.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
     }
     
     @objc func amazonButtonPressed() {
@@ -50,7 +54,7 @@ class BestSellerDVC: UIViewController {
             let webVC = WebVC(link: book.amazonURLString)
             webVC.title = "Buy on Amazon"
             webVC.navigationItem.title = "Buy on Amazon"
-            self.navigationController?.pushViewController(webVC, animated: true)
+            navigationController?.pushViewController(webVC, animated: true)
         }
     }
     
@@ -59,7 +63,7 @@ class BestSellerDVC: UIViewController {
             let webVC = WebVC(link: book.review)
             webVC.title = "NYTimes Review"
             webVC.navigationItem.title = "NYTimes Review"
-            self.navigationController?.pushViewController(webVC, animated: true)
+            navigationController?.pushViewController(webVC, animated: true)
         }
     }
     
