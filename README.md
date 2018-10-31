@@ -31,7 +31,7 @@
 * Buy book on Amazon
 
 ## Test:
-* clone or download the project to test. No dependencies.
+* clone or download the project to test. Pod install if necessary.
 
 ## Built using:
 * Swift 4.2, and programmatic Layout (no storyboards) 
