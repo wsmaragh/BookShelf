@@ -8,14 +8,14 @@
 
 import UIKit
 
-class FavoriteVC: UIViewController {
+final class FavoriteVC: UIViewController {
     
-    let favoriteView = FavoriteView()
-    let favoriteEmptyView = FavoriteEmptyView()
+    private let favoriteView = FavoriteView()
+    private let favoriteEmptyView = FavoriteEmptyView()
     
-    let dataService = BookDataService()
+    private let dataService = BookDataService()
     
-    var books: [NYTBestSellerBook] = [] {
+    private var books: [NYTBestSellerBook] = [] {
         didSet {
             reloadTableView()
         }
@@ -75,7 +75,7 @@ class FavoriteVC: UIViewController {
     
 }
 
-// MARK: Tableview Datasource
+
 extension FavoriteVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -111,7 +111,7 @@ extension FavoriteVC: UITableViewDataSource {
     
 }
 
-// MARK: Tableview Delegate
+
 extension FavoriteVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

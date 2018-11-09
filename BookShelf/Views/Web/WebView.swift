@@ -9,8 +9,7 @@
 import UIKit
 import WebKit
 
-
-class WebView: UIView {
+final class WebView: UIView {
     
     lazy var webView: WKWebView = {
         let webView = WKWebView()
@@ -66,8 +65,6 @@ class WebView: UIView {
             spinner.centerYAnchor.constraint(equalTo: webView.centerYAnchor)
             ])
     }
-    
-    
     
 }
 

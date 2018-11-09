@@ -9,8 +9,7 @@
 import UIKit
 import AVKit
 
-
-class LoadingVC: UIViewController {
+final class LoadingVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +17,7 @@ class LoadingVC: UIViewController {
         view.backgroundColor = .white
     }
     
-    func setupAndPlayVideo() {
+    private func setupAndPlayVideo() {
         guard let videoURL = Bundle.main.url(forResource: "book", withExtension: "mp4") else {
             print("Error getting video URL")
             return
@@ -40,6 +39,7 @@ class LoadingVC: UIViewController {
         view.sendSubviewToBack(layer)
         
         avPlayer.play()
+        avPlayer.actionAtItemEnd
         
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishedPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem)
     }

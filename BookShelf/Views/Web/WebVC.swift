@@ -10,8 +10,7 @@ import UIKit
 import WebKit
 import AVFoundation
 
-
-class WebVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
+final class WebVC: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     let webView = WebView()
     

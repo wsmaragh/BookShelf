@@ -8,8 +8,7 @@
 
 import UIKit
 
-
-class BestSellerView: UIView {
+final class BestSellerView: UIView {
 
     lazy var orderSegmentedControl: UISegmentedControl = {
         let items = ["Rank", "Weeks on List"]

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OfflineView: UIView {
+final class OfflineView: UIView {
     
     lazy var lightShadeView: UIView = {
         let lightView = UIView()

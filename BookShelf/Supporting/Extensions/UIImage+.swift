@@ -6,8 +6,7 @@
 //  Copyright © 2018 Winston Maragh. All rights reserved.
 //
 
-import UIKit
-
+import UIKit.UIImage
 
 extension UIImage {
     

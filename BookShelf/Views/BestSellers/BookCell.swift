@@ -8,11 +8,10 @@
 
 import UIKit
 
-class BookCell: UITableViewCell {
+final class BookCell: UITableViewCell {
 
     lazy var bookImageView: UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
         return iv
     }()
     
@@ -23,7 +22,6 @@ class BookCell: UITableViewCell {
         label.textAlignment = .left
         label.layer.opacity = 0.9
         label.textColor = UIColor.darkGray
-        label.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
         label.numberOfLines = 2
         return label
     }()
@@ -35,7 +33,6 @@ class BookCell: UITableViewCell {
         label.textAlignment = .left
         label.layer.opacity = 0.9
         label.textColor = UIColor.darkGray
-        label.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
         label.numberOfLines = 0
         return label
     }()
@@ -47,7 +44,6 @@ class BookCell: UITableViewCell {
         label.textAlignment = .left
         label.layer.opacity = 0.9
         label.textColor = UIColor.lightGray
-        label.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
         label.numberOfLines = 0
         return label
     }()
@@ -59,7 +55,6 @@ class BookCell: UITableViewCell {
         label.textAlignment = .left
         label.layer.opacity = 0.9
         label.textColor = UIColor.lightGray
-        label.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
         label.numberOfLines = 0
         return label
     }()
@@ -88,29 +83,29 @@ class BookCell: UITableViewCell {
         addCustomSkeleton()
     }
     
-    func roundedCorners() {
-        self.layer.masksToBounds = true
-        self.layer.cornerRadius = 6
+    private func roundedCorners() {
+        layer.masksToBounds = true
+        layer.cornerRadius = 6
         bookImageView.layer.masksToBounds = true
         bookImageView.layer.cornerRadius = 6
     }
     
-    func addCustomSkeleton() {
+    private func addCustomSkeleton() {
         self.isUserInteractionEnabled = false
-        bookImageView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
-        titleLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
-        authorLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
-        rankLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
-        weeksOnListLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+        bookImageView.backgroundColor = UIColor.skeletonColor
+        titleLabel.backgroundColor = UIColor.skeletonColor
+        authorLabel.backgroundColor = UIColor.skeletonColor
+        rankLabel.backgroundColor = UIColor.skeletonColor
+        weeksOnListLabel.backgroundColor = UIColor.skeletonColor
     }
     
-    func removeCustomSkeleton() {
-        self.isUserInteractionEnabled = true
-        bookImageView.backgroundColor = self.backgroundColor
-        titleLabel.backgroundColor = self.backgroundColor
-        authorLabel.backgroundColor = self.backgroundColor
-        rankLabel.backgroundColor = self.backgroundColor
-        weeksOnListLabel.backgroundColor = self.backgroundColor
+    private func removeCustomSkeleton() {
+        isUserInteractionEnabled = true
+        bookImageView.backgroundColor = backgroundColor
+        titleLabel.backgroundColor = backgroundColor
+        authorLabel.backgroundColor = backgroundColor
+        rankLabel.backgroundColor = backgroundColor
+        weeksOnListLabel.backgroundColor = backgroundColor
     }
     
     private func setupViews() {

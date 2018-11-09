@@ -9,8 +9,7 @@
 import Foundation
 import UIKit
 
-
-class ImageService {
+final class ImageService {
     
     private init() {}
     static let shared = ImageService()
@@ -39,7 +38,7 @@ class ImageService {
 }
 
 
-class ImageCacheService {
+final class ImageCacheService {
     
     private init() {}
     static let shared = ImageCacheService()

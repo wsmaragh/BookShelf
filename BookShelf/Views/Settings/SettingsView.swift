@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsView: UIView {
+final class SettingsView: UIView {
  
     static var viewID: String {
         return String(describing: self)
@@ -16,7 +16,7 @@ class SettingsView: UIView {
     
     lazy var container: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+        view.backgroundColor = UIColor.skeletonColor
         return view
     }()
     
@@ -27,7 +27,7 @@ class SettingsView: UIView {
         label.textAlignment = .center
         label.layer.opacity = 1.0
         label.textColor = UIColor.white
-        label.backgroundColor = UIColor.init(red: 51/255, green: 102/255, blue: 204/255, alpha: 1.0)
+        label.backgroundColor = UIColor.appBlue
         label.numberOfLines = 1
         return label
     }()
@@ -55,7 +55,7 @@ class SettingsView: UIView {
     lazy var doneButton: UIButton = {
         let button = UIButton()
         button.setTitle(" Done ", for: .normal)
-        button.backgroundColor = UIColor.init(red: 51/255, green: 102/255, blue: 204/255, alpha: 1.0)
+        button.backgroundColor = UIColor.appBlue
         return button
     }()
     
@@ -149,9 +149,5 @@ class SettingsView: UIView {
             doneButton.centerXAnchor.constraint(equalTo: container.centerXAnchor)
             ])
     }
-
-
-    
-    
     
 }

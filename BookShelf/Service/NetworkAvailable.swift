@@ -9,13 +9,11 @@
 import Foundation
 import Reachability
 
-
 class NetworkAvailable: NSObject {
     
     static let shared = NetworkAvailable()
     
     var reachability = Reachability()!
-    
     
     override init() {
         super.init()
@@ -27,7 +25,7 @@ class NetworkAvailable: NSObject {
             object: reachability
         )
         
-        reachability.allowsCellularConnection = false //used to test only wifi on phone
+        reachability.allowsCellularConnection = true
         
         do {
             try reachability.startNotifier()
@@ -37,7 +35,7 @@ class NetworkAvailable: NSObject {
     }
     
     @objc func networkStatusChanged(_ notification: Notification) {
-        print("Network Status changed") //
+        print("Network Status changed")
     }
     
     static func stopNotifier() -> Void {

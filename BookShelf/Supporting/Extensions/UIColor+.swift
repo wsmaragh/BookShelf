@@ -6,9 +6,12 @@
 //  Copyright © 2018 Winston Maragh. All rights reserved.
 //
 
-import UIKit
+import UIKit.UIColor
 
 extension UIColor {
+    
+    static let skeletonColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+    static let appBlue = UIColor(red: 51/255, green: 102/255, blue: 204/255, alpha: 1.0)
     
     static var randomColor: UIColor {
         let red = CGFloat.random(in: 0...1)

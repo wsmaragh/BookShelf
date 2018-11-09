@@ -9,7 +9,7 @@
 import UIKit
 import SkeletonView
 
-class CategoryCell: UICollectionViewCell {
+final class CategoryCell: UICollectionViewCell {
 
     lazy var label: UILabel = {
         let label = UILabel()
@@ -61,9 +61,7 @@ class CategoryCell: UICollectionViewCell {
                 label.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
                 label.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor)
             ])
-        }
-
-        else {
+        } else {
             NSLayoutConstraint.activate([
                 label.centerXAnchor.constraint(equalTo: centerXAnchor),
                 label.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -77,8 +75,8 @@ class CategoryCell: UICollectionViewCell {
         removeBackgroundSkeleton()
     }
     
-    func removeBackgroundSkeleton() {
-        label.backgroundColor = self.backgroundColor
+    private func removeBackgroundSkeleton() {
+        label.backgroundColor = backgroundColor
     }
     
 }

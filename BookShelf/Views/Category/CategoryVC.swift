@@ -9,10 +9,10 @@
 import UIKit
 import SkeletonView
 
-class CategoryVC: UIViewController {
+final class CategoryVC: UIViewController {
     
-    let categoriesView = CategoriesView()
-    let dataService = BookDataService()
+    private let categoriesView = CategoriesView()
+    private let dataService = BookDataService()
 
     private var searchController: UISearchController = UISearchController(searchResultsController: nil)
     
@@ -28,9 +28,9 @@ class CategoryVC: UIViewController {
         }
     }
     
-    var booksDict: [String : [NYTBestSellerBook]] = [:]
+    private var booksDict: [String : [NYTBestSellerBook]] = [:]
     
-    var startup: Bool = true
+    private var startup: Bool = true
     
     override func viewWillAppear(_ animated: Bool) {
         if startup {
@@ -108,7 +108,7 @@ class CategoryVC: UIViewController {
         }
     }
     
-    func makeSkeletonable() {
+    private func makeSkeletonable() {
         view.isSkeletonable = true
         categoriesView.isSkeletonable = true
         categoriesView.collectionView.isSkeletonable = true
@@ -128,7 +128,7 @@ class CategoryVC: UIViewController {
         })
     }
     
-    func filterContentForSearchText(_ searchText: String) {
+    private func filterContentForSearchText(_ searchText: String) {
         filteredCategories.removeAll()
         filteredCategories = categories.filter({( category : NYTBookCategory) -> Bool in
             return category.displayName.lowercased().contains(searchText.lowercased())
@@ -171,10 +171,6 @@ class CategoryVC: UIViewController {
         offlineVC.modalTransitionStyle = .crossDissolve
         offlineVC.modalPresentationStyle = .overFullScreen
         present(offlineVC, animated: true, completion: nil)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
 
 }

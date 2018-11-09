@@ -8,22 +8,21 @@
 
 import UIKit
 
-class CategoriesView: UIView {
+final class CategoriesView: UIView {
     
     lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        
-        let collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
-        collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.cellID)
-        collectionView.backgroundColor = UIColor.clear
-        
         let cellSpacing: CGFloat = 10.0
-        
+
+        let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = cellSpacing
         layout.minimumInteritemSpacing = cellSpacing
         layout.sectionInset = UIEdgeInsets(top: cellSpacing, left: cellSpacing, bottom: cellSpacing, right: cellSpacing)
         
+        let collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: layout)
+        collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.cellID)
+        collectionView.backgroundColor = UIColor.clear
+ 
         let numCellsPerRow: CGFloat = 2
         let numSpacesOnRow: CGFloat = numCellsPerRow + 1
         let itemWidth = (collectionView.layer.bounds.width - (cellSpacing * numSpacesOnRow))/numCellsPerRow
@@ -63,9 +62,7 @@ class CategoriesView: UIView {
                 collectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
                 collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
                 ])
-        }
-            
-        else {
+        } else {
             let spacing: CGFloat = 8.0
             NSLayoutConstraint.activate([
                 collectionView.topAnchor.constraint(equalTo: topAnchor, constant: spacing),

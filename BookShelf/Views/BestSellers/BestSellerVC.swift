@@ -8,19 +8,18 @@
 
 import UIKit
 
+final class BestSellerVC: UIViewController {
 
-class BestSellerVC: UIViewController {
-
-    let bestSellerView = BestSellerView()
-    let dataService = BookDataService()
+    private let bestSellerView = BestSellerView()
+    private let dataService = BookDataService()
 
     var category: NYTBookCategory!
-    
-    var books: [NYTBestSellerBook] = []
+
+    private var books: [NYTBestSellerBook] = []
     
     init(category: NYTBookCategory) {
-        super.init(nibName: nil, bundle: nil)
         self.category = category
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -98,7 +97,7 @@ class BestSellerVC: UIViewController {
 
 }
 
-// MARK: Tableview Datasource
+
 extension BestSellerVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -127,7 +126,7 @@ extension BestSellerVC: UITableViewDataSource {
     
 }
 
-// MARK: Tableview Delegate
+
 extension BestSellerVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

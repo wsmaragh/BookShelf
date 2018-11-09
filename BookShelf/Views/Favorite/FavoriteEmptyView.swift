@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FavoriteEmptyView: UIView {
+final class FavoriteEmptyView: UIView {
 
     lazy var favImageView: UIImageView = {
         let iv = UIImageView()

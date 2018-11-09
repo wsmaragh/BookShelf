@@ -14,11 +14,9 @@ class FileManagerService {
     private init(){}
     static let shared = FileManagerService()
     
-    
     static let kFavorites = "FavoriteBooks.plist"
     static let kCategories = "Categories.plist"
     static let kBooks = "Books.plist"
-
     
     private var categories = [NYTBookCategory]()
     private var booksDict = [String: [NYTBestSellerBook]]()
@@ -27,7 +25,6 @@ class FileManagerService {
             saveFavoriteBooks()
         }
     }
-    
     
     private func dataFilePath(pathName: String)->URL {
         let path = FileManagerService.shared.documentDirectory()
@@ -38,9 +35,6 @@ class FileManagerService {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
-    
-
-
     
     private func saveFavoriteBooks(){
         do {
@@ -188,8 +182,12 @@ class FileManagerService {
         catch {print("error removing: \(error)"); return false}
     }
     
-    
+}
 
+
+
+extension FileManagerService {
+    
     // Categories
     func saveCategories(categories: [NYTBookCategory]) {
         do {
@@ -201,7 +199,7 @@ class FileManagerService {
         }
     }
     
-     func getCategories() -> [NYTBookCategory]? {
+    func getCategories() -> [NYTBookCategory]? {
         do {
             let path = dataFilePath(pathName: FileManagerService.kCategories)
             let data = try Data.init(contentsOf: path)
@@ -214,10 +212,3 @@ class FileManagerService {
     }
     
 }
-
-
-
-
-
-
-

@@ -8,9 +8,9 @@
 
 import UIKit
 
-class OfflineVC: UIViewController {
+final class OfflineVC: UIViewController {
 
-    let offlineView = OfflineView()
+    private let offlineView = OfflineView()
 
     override func loadView() {
         view = offlineView

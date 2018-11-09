@@ -21,7 +21,6 @@ struct UserDefaultsService {
     
     let defaults = UserDefaults.standard
     
-    
     // Preferred Order
     private let preferredOrder = "preferredOrder"
     
@@ -33,7 +32,7 @@ struct UserDefaultsService {
         guard let order = defaults.string(forKey: preferredOrder) else {
             return PreferredOrder.rank
         }
-        return order == "rank" ? PreferredOrder.rank : PreferredOrder.weeksOnList
+        return order == PreferredOrder.rank.rawValue ? PreferredOrder.rank : PreferredOrder.weeksOnList
     }
 
     // Category

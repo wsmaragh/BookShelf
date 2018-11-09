@@ -8,10 +8,9 @@
 
 import UIKit
 
+final class SettingsVC: UIViewController {
 
-class SettingsVC: UIViewController {
-
-    let settingsView = SettingsView()
+    private let settingsView = SettingsView()
     
     override func loadView() {
         view = settingsView

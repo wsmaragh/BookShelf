@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BestSellerDVC: UIViewController {
+final class BestSellerDVC: UIViewController {
 
     let bestSellerDetailView = BestSellerDetailView()
     

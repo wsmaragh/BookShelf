@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FavoriteView: UIView {
+final class FavoriteView: UIView {
     
     lazy var tableView: UITableView = {
         let tv = UITableView()

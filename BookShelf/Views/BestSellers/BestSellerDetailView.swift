@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BestSellerDetailView: UIView {
+final class BestSellerDetailView: UIView {
 
     lazy var bookImageView: UIImageView = {
         let iv = UIImageView()
@@ -112,32 +112,32 @@ class BestSellerDetailView: UIView {
         setupViews()
     }
     
-    func roundedCorners() {
+    private func roundedCorners() {
         amazonButton.layer.cornerRadius = 6
         amazonButton.layer.masksToBounds = true
         bookReviewButton.layer.cornerRadius = 6
         bookReviewButton.layer.masksToBounds = true
     }
     
-    func addCustomSkeleton() {
-        self.isUserInteractionEnabled = false
-        bookImageView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
-        titleLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
-        authorLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
-        rankLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
-        weeksOnListLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
-        descriptionLabel.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)
+    private func addCustomSkeleton() {
+        isUserInteractionEnabled = false
+        bookImageView.backgroundColor = UIColor.skeletonColor
+        titleLabel.backgroundColor = UIColor.skeletonColor
+        authorLabel.backgroundColor = UIColor.skeletonColor
+        rankLabel.backgroundColor = UIColor.skeletonColor
+        weeksOnListLabel.backgroundColor = UIColor.skeletonColor
+        descriptionLabel.backgroundColor = UIColor.skeletonColor
 
     }
     
-    func removeCustomSkeleton() {
-        self.isUserInteractionEnabled = true
-        bookImageView.backgroundColor = self.backgroundColor
-        titleLabel.backgroundColor = self.backgroundColor
-        authorLabel.backgroundColor = self.backgroundColor
-        rankLabel.backgroundColor = self.backgroundColor
-        weeksOnListLabel.backgroundColor = self.backgroundColor
-        descriptionLabel.backgroundColor = self.backgroundColor
+    private func removeCustomSkeleton() {
+        isUserInteractionEnabled = true
+        bookImageView.backgroundColor = backgroundColor
+        titleLabel.backgroundColor = backgroundColor
+        authorLabel.backgroundColor = backgroundColor
+        rankLabel.backgroundColor = backgroundColor
+        weeksOnListLabel.backgroundColor = backgroundColor
+        descriptionLabel.backgroundColor = backgroundColor
 
     }
     
