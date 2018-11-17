@@ -43,6 +43,10 @@
 		23E1581E2177DDFF0090AD0C /* BookDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E1581D2177DDFF0090AD0C /* BookDataService.swift */; };
 		23E158202177DE0D0090AD0C /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E1581F2177DE0D0090AD0C /* ImageService.swift */; };
 		23E158222177E1940090AD0C /* FileManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E158212177E1940090AD0C /* FileManagerService.swift */; };
+		23EA146D2195D6650062A71D /* NetworkAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EA146C2195D6650062A71D /* NetworkAvailability.swift */; };
+		23EA146F2195D69D0062A71D /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EA146E2195D69D0062A71D /* NetworkError.swift */; };
+		23EA14712195D6E10062A71D /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EA14702195D6E10062A71D /* Endpoints.swift */; };
+		23EA14732195D7490062A71D /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EA14722195D7490062A71D /* UIImageView+.swift */; };
 		23F56BA1217FAE39003F2945 /* LoadingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F56BA0217FAE39003F2945 /* LoadingVC.swift */; };
 		23F9D510217E11C90042B83D /* OfflineVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F9D50F217E11C90042B83D /* OfflineVC.swift */; };
 		23F9D512217E11FD0042B83D /* OfflineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F9D511217E11FD0042B83D /* OfflineView.swift */; };
@@ -89,6 +93,10 @@
 		23E1581D2177DDFF0090AD0C /* BookDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDataService.swift; sourceTree = "<group>"; };
 		23E1581F2177DE0D0090AD0C /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		23E158212177E1940090AD0C /* FileManagerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerService.swift; sourceTree = "<group>"; };
+		23EA146C2195D6650062A71D /* NetworkAvailability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAvailability.swift; sourceTree = "<group>"; };
+		23EA146E2195D69D0062A71D /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		23EA14702195D6E10062A71D /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
+		23EA14722195D7490062A71D /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		23F56BA0217FAE39003F2945 /* LoadingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingVC.swift; sourceTree = "<group>"; };
 		23F9D50F217E11C90042B83D /* OfflineVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineVC.swift; sourceTree = "<group>"; };
 		23F9D511217E11FD0042B83D /* OfflineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineView.swift; sourceTree = "<group>"; };
@@ -115,6 +123,7 @@
 			children = (
 				239AC0CF21791EA700CBF340 /* UIColor+.swift */,
 				239AC0D121791EEF00CBF340 /* UIImage+.swift */,
+				23EA14722195D7490062A71D /* UIImageView+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -255,6 +264,7 @@
 				232D4C242186681B00666294 /* Videos */,
 				232D4C20218667BA00666294 /* Extensions */,
 				23DE35E9217A443C00854AC5 /* Gifs */,
+				23EA14702195D6E10062A71D /* Endpoints.swift */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -262,6 +272,8 @@
 		23E158122177DBBD0090AD0C /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				23EA146C2195D6650062A71D /* NetworkAvailability.swift */,
+				23EA146E2195D69D0062A71D /* NetworkError.swift */,
 				23F9D515217E190D0042B83D /* NetworkAvailable.swift */,
 				23E1581B2177DD920090AD0C /* UserDefaultsService.swift */,
 				23E158212177E1940090AD0C /* FileManagerService.swift */,
@@ -429,13 +441,16 @@
 			files = (
 				23F9D516217E190D0042B83D /* NetworkAvailable.swift in Sources */,
 				239AC0E22179603200CBF340 /* BestSellerDVC.swift in Sources */,
+				23EA14712195D6E10062A71D /* Endpoints.swift in Sources */,
 				23B4BA63217A6C1000199F20 /* FavoriteVC.swift in Sources */,
 				23E158162177DBDF0090AD0C /* APIKeys.swift in Sources */,
 				239AC0E021792E5B00CBF340 /* BookCell.swift in Sources */,
 				239AC0D021791EA700CBF340 /* UIColor+.swift in Sources */,
 				239AC0CC2179182500CBF340 /* CategoryCell.swift in Sources */,
 				239AC0D221791EEF00CBF340 /* UIImage+.swift in Sources */,
+				23EA14732195D7490062A71D /* UIImageView+.swift in Sources */,
 				239AC0E42179607000CBF340 /* BestSellerDetailView.swift in Sources */,
+				23EA146F2195D69D0062A71D /* NetworkError.swift in Sources */,
 				23E157FB2177DADE0090AD0C /* CategoryVC.swift in Sources */,
 				23B4BA66217A76A400199F20 /* FavoriteEmptyView.swift in Sources */,
 				23E1581A2177DCC80090AD0C /* MasterBook.swift in Sources */,
@@ -452,6 +467,7 @@
 				23E158202177DE0D0090AD0C /* ImageService.swift in Sources */,
 				23DE35E8217A1F4E00854AC5 /* SettingsView.swift in Sources */,
 				23E158182177DC490090AD0C /* NYTBookCategory.swift in Sources */,
+				23EA146D2195D6650062A71D /* NetworkAvailability.swift in Sources */,
 				23F56BA1217FAE39003F2945 /* LoadingVC.swift in Sources */,
 				239AC0DA21792D4C00CBF340 /* BestSellerVC.swift in Sources */,
 				232BA3A621796DF1009858D5 /* WebVC.swift in Sources */,

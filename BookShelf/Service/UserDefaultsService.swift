@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 enum PreferredOrder: String {
     case rank
     case weeksOnList

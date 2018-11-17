@@ -39,7 +39,6 @@ final class LoadingVC: UIViewController {
         view.sendSubviewToBack(layer)
         
         avPlayer.play()
-        avPlayer.actionAtItemEnd
         
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishedPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem)
     }

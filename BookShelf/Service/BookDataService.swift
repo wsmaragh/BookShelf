@@ -7,17 +7,6 @@
 //
 
 import Foundation
-import PromiseKit
-
-enum NetworkError {
-    case badURL
-    case other(Error)
-    case badStatusCode(Int)
-    case noResponse
-    case couldNotParseJSON(Error)
-    case noDataReceived
-}
-
 
 struct BookDataService {
     
